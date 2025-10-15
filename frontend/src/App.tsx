@@ -46,6 +46,15 @@ import NewsletterSubscribers from "./pages/admin/NewsletterSubscribers";
 import CertificateValidation from "./pages/CertificateValidation";
 
 
+// Gallery management
+// import AdminGalleryList from "./pages/admin/gallery/AdminGalleryList";
+// import GalleryForm from "./pages/admin/gallery/GalleryForm";
+import GallerySection from "./components/gallery/GallerySection";
+// import EditGallery from "./pages/admin/gallery/EditGallery";
+import GalleryManagement from "./pages/admin/gallery";
+
+
+
 function Router() {
   const [location] = useLocation();
   const isAdminRoute = location.startsWith('/admin');
@@ -70,6 +79,14 @@ function Router() {
       <Route path="/tutor" component={TutorSection} />
       <Route path="/newsletter/manage" component={NewsletterManage} />
       <Route path="/certificate-validation" component={CertificateValidation} />
+
+ 
+      <Route path="/gallery" component={GallerySection} />
+      {/* <Route path="/admin/gallery" component={AdminGalleryList} /> */}
+       {/* <Route path="/admin/gallery" component={gallery} />
+      <Route path="/admin/gallery/new" component={GalleryForm} />
+      <Route path="/admin/gallery/edit/:id" component={EditGallery} />. */}
+    
 
 
       <Route path="/privacy-policy" component = {PrivacyPolicy} />
@@ -102,6 +119,11 @@ function Router() {
       <ProtectedRoute path="/admin/settings">
         <AdminSettings />
       </ProtectedRoute>
+      <ProtectedRoute path="/admin/gallery">
+        <GalleryManagement />
+      </ProtectedRoute>
+
+
 
       {/* <Route path="/certificate-validation" component={CertificateValidation} /> */}
       <Route path="/admin-secret" component={() => {

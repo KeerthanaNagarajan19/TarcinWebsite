@@ -319,3 +319,4 @@ export default function EventForm({ event, isOpen, onClose }: EventFormProps) {
     </Dialog>
   );
 }
+

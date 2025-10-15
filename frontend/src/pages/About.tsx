@@ -8,6 +8,9 @@ import Newsletter from "../components/home/Newsletter";
 import { fadeUpVariants, staggerContainerVariants } from "../lib/animations";
 import useScrollAnimation from "../hooks/use-scroll-animation";
 import AboutSection from "../components/about/AboutSection";
+import GalleryIntro from "@/components/about/GalleryIntro";
+
+
 const alaudin = "../../assets/alaudin.jpg"
 
 interface TeamMember {
@@ -431,14 +434,19 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials (Reusing the testimonials component) */}
-      <Testimonials />
+      {/* Gallery Intro Section */}
+      <GalleryIntro />
 
       {/* Stats (Reusing the stats component) */}
       <Stats />
 
+      {/* Testimonials (Reusing the testimonials component) */}
+      <Testimonials />
+
       {/* Newsletter (Reusing the newsletter component) */}
       <Newsletter />
+
+      
     </>
   );
 };

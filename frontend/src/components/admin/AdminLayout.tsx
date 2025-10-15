@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { LogOut, Settings, FileText, Calendar, Briefcase, Users, LayoutDashboard, Notebook, Mail } from "lucide-react";
+import { LogOut, Settings, FileText, Calendar, Briefcase, Users, LayoutDashboard, Notebook, Mail,Image } from "lucide-react";
 import { useAdminAuth } from "../../hooks/use-admin-auth";
 
 interface AdminLayoutProps {
@@ -43,6 +43,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     { path: '/admin/events', label: 'Events', icon: Calendar },
     { path: '/admin/careers', label: 'Careers', icon: Briefcase },
     { path: '/admin/community', label: 'Community Stories', icon: Users },
+    { path: "/admin/gallery", label: "Gallery", icon: Image },
     { path: '/admin/newsletter-subscribers', label: 'Newsletter', icon: Mail },
     { path: '/admin/settings', label: 'Settings', icon: Settings },
   ];

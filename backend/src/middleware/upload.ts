@@ -96,4 +96,32 @@ export const uploadProfile = multer({
 });
 
 
+// configure multer storage for gallery
 
+const galleryUploadDir = path.join(__dirname, "../../uploads/gallery");
+if (!fs.existsSync(galleryUploadDir)) {
+  fs.mkdirSync(galleryUploadDir, { recursive: true });
+}
+
+const galleryStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, galleryUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, `image-${uniqueSuffix}${ext}`);
+  },
+});
+
+export const uploadGallery = multer({
+  storage: galleryStorage,
+  fileFilter: (_req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+    if (!allowedTypes.includes(file.mimetype)) {
+      cb(new Error("Only jpg, jpeg, png, and webp files are allowed"));
+    } else {
+      cb(null, true);
+    }
+  },
+});

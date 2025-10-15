@@ -15,7 +15,7 @@ import zohoAuthRoutes from "./routes/zohoAuth";
 import diagnosticsRoutes from "./routes/diagnostics";
 import newsletterDebugRoutes from "./routes/newsletterDebug";
 import certificateRoutes from "./routes/certificateRoutes"; // <-- use the file above
-
+import galleryRoutes from "./routes/galleryRoutes";
 
 
 const app = express();
@@ -48,6 +48,9 @@ app.use(express.static(path.join(__dirname, "..")));
 // ⚠️ Mount certificate API here:
 app.use("/api/validateCertificate", certificateRoutes);
 // ...
+
+
+app.use("/api/gallery", galleryRoutes);
 
 app.use(zohoAuthRoutes); // mounts /auth/zoho and /auth/zoho/callback
 app.use(diagnosticsRoutes);

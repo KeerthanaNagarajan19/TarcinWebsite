@@ -35,7 +35,8 @@ const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => {
       {post.image && (
         <div className="h-48 overflow-hidden">
           <img 
-            src={`/api${post.image}`}
+            // src={`/api${post.image}`}
+            src={`${post.image}`}
             alt={post.title} 
             className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
           />
