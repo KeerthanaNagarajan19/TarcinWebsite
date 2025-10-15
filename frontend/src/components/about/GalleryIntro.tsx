@@ -1,5 +1,6 @@
 // src/components/about/GalleryIntro.tsx
 import React from "react";
+import gallery from "../../assets/TarcinGallery.jpg"
 
 interface GalleryIntroProps {
   imageSrc?: string;
@@ -26,7 +27,7 @@ const GalleryIntro: React.FC<GalleryIntroProps> = ({ imageSrc }) => {
           {/* Left: Image */}
           <div className="w-full md:w-1/2">
             <img
-              src={imageSrc || fallback}
+              src={gallery}
               alt="Gallery intro"
               className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
             />
