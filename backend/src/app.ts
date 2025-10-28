@@ -17,6 +17,8 @@ import newsletterDebugRoutes from "./routes/newsletterDebug";
 import certificateRoutes from "./routes/certificateRoutes"; // <-- use the file above
 import galleryRoutes from "./routes/galleryRoutes";
 
+import bodyParser from "body-parser";
+
 
 const app = express();
 
@@ -26,6 +28,11 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use("/api/auth", authRoutes);          // Auth routes here too
 app.use("/api/cms/blog", blogRoutes);

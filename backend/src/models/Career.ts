@@ -1,3 +1,40 @@
+// import mongoose, { Schema, Document } from "mongoose";
+
+// export interface ICareer extends Document {
+//   title: string;
+//   department: string;
+//   location: string;
+//   description: string;
+//   requirements: string[];
+//   isActive: boolean;
+//   applicationLink?: string;
+//   postedDate: Date;
+//   category: string;
+// }
+
+// const CareerSchema = new Schema<ICareer>({
+//   title: { type: String, required: true },
+//   department: { type: String, required: true },
+//   location: { type: String, required: true },
+//   description: { type: String, required: true },
+//   requirements: [{ type: String }],
+//   isActive: { type: Boolean, default: true },
+//   applicationLink: { type: String },
+//   postedDate: { type: Date, default: Date.now },
+//    category: { 
+//     type: String, 
+//     enum: ["job", "internship"], 
+//     default: "job", 
+//     required: true 
+//   },
+// });
+
+// const Career = mongoose.model<ICareer>("Career", CareerSchema);
+// export default Career;
+
+
+
+
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface ICareer extends Document {
@@ -9,6 +46,7 @@ export interface ICareer extends Document {
   isActive: boolean;
   applicationLink?: string;
   postedDate: Date;
+  category: "job" | "internship";
 }
 
 const CareerSchema = new Schema<ICareer>({
@@ -20,6 +58,7 @@ const CareerSchema = new Schema<ICareer>({
   isActive: { type: Boolean, default: true },
   applicationLink: { type: String },
   postedDate: { type: Date, default: Date.now },
+  category: { type: String, enum: ["job", "internship"], required: true },
 });
 
 const Career = mongoose.model<ICareer>("Career", CareerSchema);

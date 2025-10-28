@@ -557,9 +557,9 @@ const GallerySection: React.FC = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 mb-8 flex-wrap">
+        {/* <div className="flex flex-col md:flex-row items-center justify-center gap-3 mb-8 flex-wrap"> */}
           {/* Category */}
-          <select
+          {/* <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="border rounded-full px-4 py-2 text-sm bg-white"
@@ -569,10 +569,10 @@ const GallerySection: React.FC = () => {
                 {c.label}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Month */}
-          <select
+          {/* <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
             className="border rounded-full px-4 py-2 text-sm bg-white"
@@ -582,10 +582,10 @@ const GallerySection: React.FC = () => {
                 {m.label}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Year */}
-          <select
+          {/* <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
             className="border rounded-full px-4 py-2 text-sm bg-white"
@@ -596,10 +596,10 @@ const GallerySection: React.FC = () => {
                 {y}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Mobile layout toggle */}
-          <div className="flex items-center gap-2 md:hidden mt-2">
+          {/* <div className="flex items-center gap-2 md:hidden mt-2">
             <button
               onClick={() => setMobileLayout("grid")}
               aria-pressed={mobileLayout === "grid"}
@@ -616,10 +616,10 @@ const GallerySection: React.FC = () => {
             >
               <IconList active={mobileLayout === "list"} />
             </button>
-          </div>
+          </div> */}
 
           {/* Clear Filters */}
-          <button
+          {/* <button
             onClick={() => {
               setSelectedCategory("");
               setSelectedMonth("");
@@ -629,7 +629,106 @@ const GallerySection: React.FC = () => {
           >
             Clear Filters
           </button>
-        </div>
+        </div> */}
+
+        {/* Filters Section */}
+<div className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-4 md:p-6 shadow-sm mb-8">
+  <div className="flex flex-col md:flex-row items-center justify-between gap-4 flex-wrap">
+    {/* Dropdowns */}
+    <div className="flex flex-col sm:flex-row items-center gap-3 flex-wrap justify-center w-full md:w-auto">
+      {/* Category */}
+      <div className="relative">
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="border border-gray-300 rounded-full px-5 py-2.5 text-sm bg-white shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+        >
+          {CATEGORIES.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Month */}
+      <div className="relative">
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          className="border border-gray-300 rounded-full px-5 py-2.5 text-sm bg-white shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+        >
+          {MONTHS.map((m) => (
+            <option key={m.value} value={m.value}>
+              {m.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Year */}
+      <div className="relative">
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          className="border border-gray-300 rounded-full px-5 py-2.5 text-sm bg-white shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+        >
+          <option value="">All Years</option>
+          {years.map((y) => (
+            <option key={y} value={y.toString()}>
+              {y}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    {/* Actions */}
+    <div className="flex items-center gap-3">
+      {/* Mobile layout toggle */}
+      <div className="flex items-center gap-2 md:hidden">
+        <button
+          onClick={() => setMobileLayout("grid")}
+          aria-pressed={mobileLayout === "grid"}
+          aria-label="Grid view"
+          className={`p-2.5 rounded-lg border transition-all ${
+            mobileLayout === "grid"
+              ? "bg-blue-100 border-blue-400 text-blue-600"
+              : "bg-white border-gray-300 hover:bg-gray-50"
+          }`}
+        >
+          <IconGrid active={mobileLayout === "grid"} />
+        </button>
+
+        <button
+          onClick={() => setMobileLayout("list")}
+          aria-pressed={mobileLayout === "list"}
+          aria-label="List view"
+          className={`p-2.5 rounded-lg border transition-all ${
+            mobileLayout === "list"
+              ? "bg-blue-100 border-blue-400 text-blue-600"
+              : "bg-white border-gray-300 hover:bg-gray-50"
+          }`}
+        >
+          <IconList active={mobileLayout === "list"} />
+        </button>
+      </div>
+
+      {/* Clear Filters */}
+      <button
+        onClick={() => {
+          setSelectedCategory("");
+          setSelectedMonth("");
+          setSelectedYear("");
+        }}
+        className="text-sm font-medium text-blue-600 hover:text-blue-700 underline underline-offset-2 transition"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </div>
+</div>
+
 
         {/* Gallery Grid */}
         {isLoading ? (

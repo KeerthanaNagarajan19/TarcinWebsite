@@ -40,7 +40,7 @@ const [manualToggle, setManualToggle] = useState(false);
             {[
               { label: "Overview", path: "/" },
               { label: "Know Us", path: "/about" },
-              { label: "Solutions", path: "/services" },
+              { label: "Our Service", path: "/services" },
               { label: "Our Products", path: "/products" },
               { label: "Learning Hub", path: "/courses" },
             ].map((item) => (
@@ -136,7 +136,7 @@ const [manualToggle, setManualToggle] = useState(false);
             {[
               { label: "Overview", path: "/" },
               { label: "Our Story", path: "/about" },
-              { label: "Our Expertise", path: "/services" },
+              { label: "Our Service", path: "/services" },
               { label: "Our Products", path: "/products" },
               { label: "Learning Hub", path: "/courses" },,
               { label: "Blog", path: "/blog" },

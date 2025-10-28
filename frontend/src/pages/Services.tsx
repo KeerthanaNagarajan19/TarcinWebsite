@@ -321,7 +321,7 @@ const Services: React.FC = () => {
         </div>
       </section>
 
-      <CTASection />
+      {/* <CTASection /> */}
       <Newsletter />
     </>
   );
