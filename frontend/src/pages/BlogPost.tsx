@@ -235,6 +235,7 @@ const BlogPost: React.FC = () => {
             {post.image && (
               <div className="rounded-3xl overflow-hidden shadow-md mb-10">
                 <img
+                
                   src={post.image}
                   alt={post.title}
                   className="w-full h-96 object-cover hover:scale-105 transition-transform duration-500"
