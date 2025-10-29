@@ -131,7 +131,8 @@ const filteredEvents = selectedType === "All"
 
                  <div className="h-60 overflow-hidden">
       <img 
-        src={`/api${event.image}`}
+      src={event.image}
+        // src={`/api${event.image}`}
         alt={event.title} 
         className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
       />
@@ -141,9 +142,14 @@ const filteredEvents = selectedType === "All"
                   {event.title}
                 </h3>
                 
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                {/* <p className="text-gray-600 dark:text-gray-300 mb-4">
                  <ExpandableText text={event.description} limit={120} />
+                </p> */}
+
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <ExpandableText text={event.description} limit={120} />
                 </p>
+
                 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">

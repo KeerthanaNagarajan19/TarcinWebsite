@@ -58,8 +58,8 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
       /> */}
 
       <img 
-  // src={`/api${event.image}`}
-  src={`${event.image}`}
+  src={`/api${event.image}`}
+  // src={`${event.image}`}
   alt={event.title} 
   className={`w-full h-full object-cover transition-transform hover:scale-105 duration-500 ${
     isUpcoming ? "" : "grayscale"
