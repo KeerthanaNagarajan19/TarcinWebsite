@@ -128,7 +128,7 @@ const filteredEvents = selectedType === "All"
                     {event.type}
                   </span>
                 </div> */}
-
+{/* 
                  <div className="h-60 overflow-hidden">
       <img 
       src={event.image}
@@ -136,7 +136,16 @@ const filteredEvents = selectedType === "All"
         alt={event.title} 
         className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
       />
-    </div>
+    </div> */}
+                <div className="relative w-full aspect-[3/4] bg-gray-100 flex items-center justify-center overflow-hidden rounded-md">
+                      <img
+                       src={event.image}
+                       // src={`/api${event.image}`}
+                       alt={event.title}
+                      className="w-full h-full object-contain p-2 transition-transform hover:scale-105 duration-500"
+                       />
+                </div>
+
                 
                 <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-3">
                   {event.title}

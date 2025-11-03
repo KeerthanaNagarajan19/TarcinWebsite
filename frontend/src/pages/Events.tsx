@@ -48,25 +48,83 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
     
 
   return (
-   <Card className="h-auto min-h-[500px] flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg border border-gray-200">
-  {event.image && (
-    <div className="h-60 overflow-hidden">
-      {/* <img 
-        src={`/api${event.image}`}
-        alt={event.title} 
-        className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
-      /> */}
+//    <Card className="h-auto min-h-[500px] flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg border border-gray-200">
+//   {event.image && (
+//     <div className="h-60 overflow-hidden">
+//       {/* <img 
+//         src={`/api${event.image}`}
+//         alt={event.title} 
+//         className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+//       /> */}
 
-      <img 
-  src={`/api${event.image}`}
-  // src={`${event.image}`}
-  alt={event.title} 
-  className={`w-full h-full object-cover transition-transform hover:scale-105 duration-500 ${
-    isUpcoming ? "" : "grayscale"
-  }`}
-/>
-    </div>
+//       <img 
+//   src={`/api${event.image}`}
+//   // src={`${event.image}`}
+//   alt={event.title} 
+//   className={`w-full h-full object-cover transition-transform hover:scale-105 duration-500 ${
+//     isUpcoming ? "" : "grayscale"
+//   }`}
+// />
+//     </div>
     
+//   )}
+
+//   <CardHeader className="pb-2">
+//     <div className="flex items-center text-sm text-gray-500 mb-2">
+//       <CalendarIcon className="h-4 w-4 mr-1" />
+//       <span>
+//         {formattedDate}
+//         {formattedEndDate && ` - ${formattedEndDate}`}
+//       </span>
+//     </div>
+//     <CardTitle className="text-xl font-semibold text-gray-800 hover:text-blue-700 transition-colors">
+//       {event.title}
+//     </CardTitle>
+//   </CardHeader>
+
+//   <CardContent className="pb-4 flex-grow text-gray-700">
+//     <div className="flex items-center text-sm text-gray-600 mb-3">
+//       <MapPin className="h-4 w-4 mr-1" />
+//       <span>{event.location}</span>
+//     </div>
+
+//     {/* Description with expandable content */}
+//     <ExpandableText text={event.description} limit={120} isHtml />
+//   </CardContent>
+
+//   <CardFooter className="pt-0 mt-auto">
+//   {event.registrationLink && event.isUpcoming ? (
+//     <a 
+//       href={event.registrationLink} 
+//       target="_blank" 
+//       rel="noopener noreferrer"
+//       className="w-full"
+//     >
+//       <Button variant="default" className="w-full">
+//         Register Now
+//       </Button>
+//     </a>
+//   ) : (
+//     <p className="text-sm text-muted-foreground text-center w-full">
+//       This event has ended.
+//     </p>
+//   )}
+// </CardFooter>
+
+// </Card>
+
+<Card className="h-auto flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl border border-gray-200 bg-white">
+  {event.image && (
+    <div className="relative w-full aspect-[3/4] bg-gray-100 flex items-center justify-center overflow-hidden">
+      <img
+        // src={`/api${event.image}`}
+        src={`${event.image}`}
+        alt={event.title}
+        className={`w-full h-full object-contain p-2 transition-transform hover:scale-105 duration-500 ${
+          isUpcoming ? "" : "grayscale"
+        }`}
+      />
+    </div>
   )}
 
   <CardHeader className="pb-2">
@@ -77,7 +135,7 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
         {formattedEndDate && ` - ${formattedEndDate}`}
       </span>
     </div>
-    <CardTitle className="text-xl font-semibold text-gray-800 hover:text-blue-700 transition-colors">
+    <CardTitle className="text-lg font-semibold text-gray-800 hover:text-blue-700 transition-colors">
       {event.title}
     </CardTitle>
   </CardHeader>
@@ -88,30 +146,29 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
       <span>{event.location}</span>
     </div>
 
-    {/* Description with expandable content */}
     <ExpandableText text={event.description} limit={120} isHtml />
   </CardContent>
 
   <CardFooter className="pt-0 mt-auto">
-  {event.registrationLink && event.isUpcoming ? (
-    <a 
-      href={event.registrationLink} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="w-full"
-    >
-      <Button variant="default" className="w-full">
-        Register Now
-      </Button>
-    </a>
-  ) : (
-    <p className="text-sm text-muted-foreground text-center w-full">
-      This event has ended.
-    </p>
-  )}
-</CardFooter>
-
+    {event.registrationLink && event.isUpcoming ? (
+      <a
+        href={event.registrationLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full"
+      >
+        <Button variant="default" className="w-full">
+          Get Ticket
+        </Button>
+      </a>
+    ) : (
+      <p className="text-sm text-muted-foreground text-center w-full">
+        This event has ended.
+      </p>
+    )}
+  </CardFooter>
 </Card>
+
 
   );
 };
