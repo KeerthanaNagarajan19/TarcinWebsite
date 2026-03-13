@@ -5,16 +5,6 @@ import slugify from "slugify";
 import mongoose from 'mongoose';
 import { recordAnnouncement } from "../utils/newsletter";
 
-// Add typings for file upload (multer)
-declare global {
-  namespace Express {
-    interface Request {
-      file?: any;
-      files?: any;
-    }
-  }
-}
-
 // ✅ Get all blog posts
 export const getAllBlogs = async (req: Request, res: Response) => {
   try {
@@ -22,7 +12,7 @@ export const getAllBlogs = async (req: Request, res: Response) => {
 
     const formatted = posts.map((post) => {
       const postObj = post.toObject();
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
 
       return {
         ...postObj,
@@ -102,16 +92,16 @@ export const createBlog = async (req: Request, res: Response) => {
 
     await blog.save();
     if (blog.published) {
-  const base = process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get("host")}`;
-  await recordAnnouncement({
-    type: "blog",
-    refId: String(blog._id),
-    title: blog.title,
-    summary: blog.summary,
-    url: `${base}/blog/${blog.slug}`,
-    image: blog.image ? `${base}${blog.image}` : undefined,
-  });
-}
+      const base = process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get("host")}`;
+      await recordAnnouncement({
+        type: "blog",
+        refId: String(blog._id),
+        title: blog.title,
+        summary: blog.summary,
+        url: `${base}/blog/${blog.slug}`,
+        image: blog.image ? `${base}${blog.image}` : undefined,
+      });
+    }
     res.status(201).json(blog);
   } catch (error) {
     console.error("Error creating blog post:", error);

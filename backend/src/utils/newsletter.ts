@@ -96,7 +96,7 @@ export async function sendDigest(periodKey: "daily" | "weekly", { dryRun = false
         await Newsletter.updateOne({ _id: sub._id }, { $set: { lastDigestAt: new Date() } });
       }
       sent++;
-    } catch (e) {
+    } catch (e: any) {
       console.error("digest send failed for", sub.email, e?.response?.data || e);
       failures++;
     }

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { Pool } from "pg";
 
+const pool = new Pool(); // Add proper PostgreSQL connection initialization if actually used.
+
 export const validateCertificate = async (req: Request, res: Response) => {
   const certId = req.query.certId as string;
 

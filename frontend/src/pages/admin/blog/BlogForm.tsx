@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,18 +16,15 @@ import {
 } from "../../../components/ui/form";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
-import { Textarea } from "../../../components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useToast } from "../../../hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "../../../lib/queryClient";
+import { queryClient } from "../../../lib/queryClient";
 import { Switch } from "../../../components/ui/switch";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// import { Label } from "../../../components/ui/label";
-// import { error } from "console";
 
 interface BlogPost {
   id: string;
@@ -55,12 +51,10 @@ const formSchema = z.object({
   summary: z.string().min(1, "Summary is required"),
   content: z.string().min(1, "Content is required"),
   author: z.string().min(1, "Author is required"),
-  image: z.any().optional(), 
-  tags: z.string().optional().transform(val => val ? val.split(',').map(tag => tag.trim()) : []),
+  image: z.any().optional(),
+  tags: z.string().optional(),
   published: z.boolean().default(false),
 });
-
-
 
 export default function BlogForm({ blog, isOpen, onClose }: BlogFormProps) {
   const { toast } = useToast();
@@ -81,79 +75,70 @@ export default function BlogForm({ blog, isOpen, onClose }: BlogFormProps) {
   });
 
   // Create/update mutation
-const mutation = useMutation({
-  mutationFn: async (values: any) => {
-    const isEditMode = isEditing && blog?.id;
-    const endpoint = isEditMode
-      ? `/api/cms/blog/${blog.id}`
-      : `/api/cms/blog`;
+  const mutation = useMutation({
+    mutationFn: async (inputValues: z.infer<typeof formSchema>) => {
+      const isEditMode = isEditing && blog?.id;
+      const endpoint = isEditMode
+        ? `/api/cms/blog/${blog.id}`
+        : `/api/cms/blog`;
 
-    const method = isEditMode ? "PUT" : "POST";
+      const method = isEditMode ? "PUT" : "POST";
 
-    const token = localStorage.getItem("admin_token");
-    if (!token) {
-      throw new Error("User not authenticated");
-    }
+      const token = localStorage.getItem("admin_token");
+      if (!token) {
+        throw new Error("User not authenticated");
+      }
 
-    // ✅ Send FormData directly (do NOT set Content-Type)
-    const response = await fetch(endpoint, {
-      method,
-      headers: {
-        Authorization: `Bearer ${token}`, // only auth header
-      },
-      body: values, // values is FormData
-    });
+      // Convert tags string to array
+      const tagArray = inputValues.tags
+        ? inputValues.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+        : [];
 
-    const data = await response.json();
+      // Create FormData
+      const formData = new FormData();
+      formData.append("title", inputValues.title);
+      formData.append("summary", inputValues.summary);
+      formData.append("content", inputValues.content);
+      formData.append("author", inputValues.author);
+      formData.append("published", String(inputValues.published));
+      formData.append("tags", JSON.stringify(tagArray));
 
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to submit blog");
-    }
+      if (inputValues.image instanceof File) {
+        formData.append("image", inputValues.image);
+      }
 
-    return data;
-  },
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
-  // ✅ Handle success and error
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ['/api/cms/blog'] });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Failed to submit blog");
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/cms/blog'] });
+      toast({
+        title: isEditing ? "Blog post updated" : "Blog post created",
+        description: `Blog post has been ${isEditing ? "updated" : "created"} successfully.`,
+      });
+      onClose();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: `Failed to ${isEditing ? "update" : "create"} blog post: ${error.message}`,
+        variant: "destructive",
+      });
+    },
+  });
 
-    toast({
-      title: isEditing ? "Blog post updated" : "Blog post created",
-      description: `Blog post has been ${isEditing ? "updated" : "created"} successfully.`,
-    });
-
-    onClose();
-  },
-
-  onError: (error: any) => {
-    toast({
-      title: "Error",
-      description: `Failed to ${isEditing ? "update" : "create"} blog post: ${error.message}`,
-      variant: "destructive",
-    });
-  },
-});
-
-
-  // Handle form submission
-  // const onSubmit = (values: z.infer<typeof formSchema>) => {
-  //   mutation.mutate(values);
-  // };
-  const onSubmit = (values: any) => {
-  const formData = new FormData();
-  formData.append("title", values.title);
-  formData.append("summary", values.summary);
-  formData.append("content", values.content);
-  formData.append("author", values.author);
-  formData.append("tags", values.tags || "");
-  formData.append("published", values.published.toString());
-
-  if (values.image) {
-    formData.append("image", values.image);
-  }
-
-  mutation.mutate(formData);
-};
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    mutation.mutate(values);
+  };
 
 
   return (
@@ -162,7 +147,7 @@ const mutation = useMutation({
         <DialogHeader>
           <DialogTitle>{isEditing ? "Edit Blog Post" : "Create New Blog Post"}</DialogTitle>
         </DialogHeader>
-        
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
@@ -178,56 +163,67 @@ const mutation = useMutation({
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="summary"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Summary</FormLabel>
+                  <FormLabel>Summary (This appears on the Blog Listing card)</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="Enter a short summary" 
-                      className="min-h-20" 
-                      {...field} 
+                    <ReactQuill
+                      theme="snow"
+                      value={field.value}
+                      onChange={field.onChange}
+                      modules={{
+                        toolbar: [
+                          ['bold', 'italic', 'underline'],
+                          ['clean'],
+                        ],
+                      }}
+                      formats={[
+                        'bold', 'italic', 'underline',
+                      ]}
+                      placeholder="Enter a short summary with highlights or bold text"
+                      className="bg-white"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
-           <FormField
-  control={form.control}
-  name="content"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Content</FormLabel>
-      <FormControl>
-        <ReactQuill
-          theme="snow"
-          value={field.value}
-          onChange={field.onChange}
-          modules={{
-            toolbar: [
-              ['bold', 'italic', 'underline'],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              [{ align: [] }],
-              ['clean'],
-            ],
-          }}
-          formats={[
-            'bold', 'italic', 'underline',
-            'list', 'bullet', 'align',
-          ]}
-          className="bg-white"
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-            
+
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Content</FormLabel>
+                  <FormControl>
+                    <ReactQuill
+                      theme="snow"
+                      value={field.value}
+                      onChange={field.onChange}
+                      modules={{
+                        toolbar: [
+                          ['bold', 'italic', 'underline'],
+                          [{ list: 'ordered' }, { list: 'bullet' }],
+                          [{ align: [] }],
+                          ['clean'],
+                        ],
+                      }}
+                      formats={[
+                        'bold', 'italic', 'underline',
+                        'list', 'bullet', 'align',
+                      ]}
+                      className="bg-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -242,30 +238,30 @@ const mutation = useMutation({
                   </FormItem>
                 )}
               />
-              
-             <FormField
-  control={form.control}
-  name="image"
-  render={() => (
-    <FormItem>
-      <FormLabel>Upload Image</FormLabel>
-      <FormControl>
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            form.setValue("image", file as any);
-          }}
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+
+              <FormField
+                control={form.control}
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Upload Image</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          form.setValue("image", file as any);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
             </div>
-            
+
             <FormField
               control={form.control}
               name="tags"
@@ -282,7 +278,7 @@ const mutation = useMutation({
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="published"
@@ -304,7 +300,7 @@ const mutation = useMutation({
                 </FormItem>
               )}
             />
-            
+
             <DialogFooter>
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel

@@ -75,27 +75,27 @@ const Testimonials: React.FC = () => {
   };
 
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-white dark:bg-gray-800 relative">
+    <section id="testimonials" className="py-16 md:py-24 bg-blue-50 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.h2
-  className="text-xl md:text-2xl font-heading font-bold text-deep-navy dark:text-white"
-  initial="hidden"
-  animate={isVisible ? "visible" : "hidden"}
-  variants={fadeUpVariants}
->
-  What Our Clients Say
-</motion.h2>
+            className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-[#001D4D]"
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={fadeUpVariants}
+          >
+            What Our Clients Say
+          </motion.h2>
 
-<motion.p
-  className="mt-3 text-base text-deep-navy dark:text-gray-300 max-w-2xl mx-auto"
-  initial="hidden"
-  animate={isVisible ? "visible" : "hidden"}
-  variants={fadeUpVariants}
-  custom={1}
->
-  Real feedback from organizations that have transformed their operations with our solutions.
-</motion.p>
+          <motion.p
+            className="mt-3 text-base text-deep-navy dark:text-gray-300 max-w-2xl mx-auto"
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={fadeUpVariants}
+            custom={1}
+          >
+            Real feedback from organizations that have transformed their operations with our solutions.
+          </motion.p>
 
         </div>
 
@@ -118,19 +118,19 @@ const Testimonials: React.FC = () => {
                     <i key={i} className="ri-star-fill text-yellow-400"></i>
                   ))}
                 </div>
-                
-                <p className="text-justify text-gray-700 dark:text-gray-300 mb-6 text-sm">
+
+                <p className="text-justify text-gray-700 dark:text-gray-300 mb-6 text-sm md:text-base leading-relaxed">
                   "{testimonials[activeIndex].text}"
                 </p>
-                
+
                 <div className="flex items-center">
                   <div className="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold">
                     {testimonials[activeIndex].initials}
                   </div>
                   <div className="ml-4">
-                    <h4 className="font-heading font-semibold text-gray-900 dark:text-white">
+                    <h3 className="font-heading font-bold text-gray-900 dark:text-white text-base md:text-lg">
                       {testimonials[activeIndex].author}
-                    </h4>
+                    </h3>
                     {/* <p className="text-gray-500 dark:text-gray-400 text-sm">
                       {testimonials[activeIndex].position}
                     </p> */}
@@ -140,19 +140,20 @@ const Testimonials: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Pagination dots */}
-          <div className="flex justify-center mt-8 space-x-2">
+          <div className="flex justify-center mt-8 gap-1">
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-full ${
-                  index === activeIndex
-                    ? "bg-blue-600 dark:bg-blue-500"
-                    : "bg-gray-300 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-400"
-                } transition-colors`}
+                className="w-12 h-12 flex items-center justify-center group"
                 aria-label={`Go to testimonial ${index + 1}`}
                 onClick={() => handleDotClick(index)}
-              />
+              >
+                <div className={`w-3 h-3 rounded-full ${index === activeIndex
+                    ? "bg-blue-600 dark:bg-blue-500"
+                    : "bg-gray-300 dark:bg-gray-700 group-hover:bg-blue-400 dark:group-hover:bg-blue-400"
+                  } transition-colors`} 
+                />
+              </button>
             ))}
           </div>
         </div>

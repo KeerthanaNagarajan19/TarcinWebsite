@@ -42,9 +42,9 @@ const Contact: React.FC = () => {
   return (
     <>
       <DocumentHead
-        title="Contact Us | Tarcin Robotic LLP"
-        description="Get in touch with Tarcin Robotic LLP for inquiries about our educational platforms, IoT devices, or collaboration opportunities. We're here to help."
-        ogTitle="Contact Tarcin Robotic LLP"
+        title="Contact Us | Tarcin LLP"
+        description="Get in touch with Tarcin LLP for inquiries about our educational platforms, IoT devices, or collaboration opportunities. We're here to help."
+        ogTitle="Contact Tarcin LLP"
         ogDescription="Reach out to our team about Code Asthram, S2P Community, or our technological solutions for educational institutions in Tamil Nadu."
       />
 
@@ -84,7 +84,7 @@ const Contact: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <motion.h1
-              className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold mb-6"
+              className="text-4xl md:text-6xl font-heading font-black mb-6 tracking-tight"
               initial="hidden"
               animate="visible"
               variants={fadeUpVariants}
@@ -112,7 +112,7 @@ const Contact: React.FC = () => {
       <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-black dark:text-white tracking-tight">
               Frequently Asked Questions
             </h2>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -120,25 +120,31 @@ const Contact: React.FC = () => {
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto divide-y divide-gray-200 dark:divide-gray-700">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 gap-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="py-6">
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden shadow-sm transition-all hover:shadow-md"
+              >
                 <button
-                  className="flex justify-between items-center w-full text-left"
                   onClick={() => toggleFAQ(index)}
+                  className="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-2xl group"
                 >
-                  <h3 className="text-lg font-heading font-semibold text-gray-900 dark:text-white">
+                  <h3 className="text-lg md:text-xl font-heading font-black text-black dark:text-white pr-8 group-hover:text-blue-600 transition-colors">
                     {faq.question}
                   </h3>
-                  <i
-                    className={`ri-arrow-${openIndex === index ? "up" : "down"}-s-line text-gray-400 dark:text-gray-500 text-xl transition-transform duration-300`}
-                  ></i>
-                </button>
-                {openIndex === index && (
-                  <div className="mt-3 text-gray-600 dark:text-gray-300">
-                    <p>{faq.answer}</p>
+                  <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border transition-all duration-300 ${openIndex === index ? 'bg-blue-600 border-blue-600 text-white rotate-180' : 'bg-gray-50 border-gray-200 dark:bg-gray-700 dark:border-gray-600 text-gray-400 group-hover:border-blue-300'}`}>
+                    <i className="ri-arrow-down-s-line text-2xl"></i>
                   </div>
-                )}
+                </button>
+
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                >
+                  <div className="p-8 pt-0 border-t border-gray-100 dark:border-gray-700 mt-2 text-gray-600 dark:text-gray-300 leading-relaxed text-base md:text-lg">
+                    {faq.answer}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

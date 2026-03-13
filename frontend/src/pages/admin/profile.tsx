@@ -1,91 +1,38 @@
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "lucide-react";
 
-export default function ProfileSection() {
+interface ProfileSectionProps {
+  user: any;
+  onUpload: (file: File) => void;
+  onUpdateUsername: (newUsername: string) => void;
+}
+
+export default function ProfileSection({ user: initialUser, onUpload, onUpdateUsername }: ProfileSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [user, setUser] = useState<any>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(initialUser?.username || "");
+  const [preview, setPreview] = useState<string | null>(initialUser?.profilePicture || null);
 
-  // ✅ Load user from backend when component mounts
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+    if (initialUser) {
+      setUsername(initialUser.username || "");
+      if (initialUser.profilePicture) {
+        setPreview(initialUser.profilePicture);
+      }
+    }
+  }, [initialUser]);
 
-    fetch("/auth/me", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-        setUsername(data.username);
-        if (data.profilePicture) {
-          setPreview(`/uploads/${data.profilePicture}`);
-        }
-        localStorage.setItem("user", JSON.stringify(data)); // keep in sync
-      })
-      .catch((err) => console.error("Failed to load user", err));
-  }, []);
-
-  // 📌 Upload profile picture
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-
-    setPreview(URL.createObjectURL(file)); // local preview
-
-    try {
-      const formData = new FormData();
-      formData.append("profilePicture", file);
-
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
-
-      const res = await fetch("/auth/profile/picture", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-
-      const updatedUser = { ...user, profilePicture: data.profilePicture };
-      setUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-
-      setPreview(`/uploads/${data.profilePicture}`);
-    } catch (err) {
-      console.error("Image upload failed", err);
+    if (file) {
+      // setPreview(URL.createObjectURL(file));
+      onUpload(file);
     }
   };
 
-  // 📌 Update username
-  const handleSaveUsername = async () => {
-    if (username.trim() === "" || username === user?.username) return;
-
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
-
-      const res = await fetch("/auth/profile/username", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ username }),
-      });
-
-      if (!res.ok) throw new Error("Username update failed");
-      const data = await res.json();
-
-      const updatedUser = { ...user, username: data.username };
-      setUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-    } catch (err) {
-      console.error("Error updating username", err);
+  const handleSaveUsername = () => {
+    if (username.trim() !== "" && username !== initialUser?.username) {
+      onUpdateUsername(username);
     }
   };
 
@@ -128,6 +75,7 @@ export default function ProfileSection() {
         <input
           type="text"
           value={username}
+          onKeyDown={(e) => e.key === 'Enter' && handleSaveUsername()}
           onChange={(e) => setUsername(e.target.value)}
           className="border rounded-md px-3 py-1 text-center"
         />
@@ -141,3 +89,5 @@ export default function ProfileSection() {
     </div>
   );
 }
+
+

@@ -15,6 +15,7 @@ interface AdminAuthContextType {
   login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
   isAuthenticated: boolean;
+  setUser: React.Dispatch<React.SetStateAction<AdminUser | null>>;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType | null>(null);
@@ -145,6 +146,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         login,
         logout,
         isAuthenticated: !!user,
+        setUser,
       }}
     >
       {children}

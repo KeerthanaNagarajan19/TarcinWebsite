@@ -216,7 +216,7 @@
 //         title="Tarcin Robotic - Admin Settings"
 //         description="Configure your site settings and profile information."
 //       />
-      
+
 //       <AdminLayout title="Settings">
 //         <div className="space-y-6">
 //           <Tabs defaultValue="site" value={activeTab} onValueChange={setActiveTab}>
@@ -224,7 +224,7 @@
 //               <TabsTrigger value="site">Site Settings</TabsTrigger>
 //               <TabsTrigger value="profile">Profile</TabsTrigger>
 //             </TabsList>
-            
+
 //             <TabsContent value="site" className="space-y-4 mt-6">
 //               <Card>
 //                 <CardHeader>
@@ -253,7 +253,7 @@
 //                             </FormItem>
 //                           )}
 //                         />
-                        
+
 //                         <FormField
 //                           control={siteForm.control}
 //                           name="contactEmail"
@@ -271,7 +271,7 @@
 //                           )}
 //                         />
 //                       </div>
-                      
+
 //                       <FormField
 //                         control={siteForm.control}
 //                         name="siteDescription"
@@ -292,12 +292,12 @@
 //                           </FormItem>
 //                         )}
 //                       />
-                      
+
 //                       <Separator className="my-4" />
-                      
+
 //                       <div className="space-y-4">
 //                         <h3 className="text-lg font-medium">Social Media Links</h3>
-                        
+
 //                         <div className="grid gap-4 md:grid-cols-2">
 //                           <FormField
 //                             control={siteForm.control}
@@ -312,7 +312,7 @@
 //                               </FormItem>
 //                             )}
 //                           />
-                          
+
 //                           <FormField
 //                             control={siteForm.control}
 //                             name="socialLinkedIn"
@@ -326,7 +326,7 @@
 //                               </FormItem>
 //                             )}
 //                           />
-                          
+
 //                           <FormField
 //                             control={siteForm.control}
 //                             name="socialFacebook"
@@ -342,7 +342,7 @@
 //                           />
 //                         </div>
 //                       </div>
-                      
+
 //                       <div className="flex justify-end">
 //                         <Button 
 //                           type="submit" 
@@ -357,7 +357,7 @@
 //                 </CardContent>
 //               </Card>
 //             </TabsContent>
-            
+
 //             {/* <TabsContent value="profile" className="space-y-4 mt-6">
 //               <Card>
 //                 <CardHeader>
@@ -383,7 +383,7 @@
 //                       <Input type="file" onChange={handleProfilePictureChange} className="mt-2" />
 //                     </div>
 //                   </div>
-                  
+
 //                   <Form {...profileForm}>
 //                     <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-6">
 //                       <FormField
@@ -399,12 +399,12 @@
 //                           </FormItem>
 //                         )}
 //                       />
-                      
+
 //                       <Separator className="my-4" />
-                      
+
 //                       <div className="space-y-4">
 //                         <h3 className="text-lg font-medium">Change Password</h3>
-                        
+
 //                         <FormField
 //                           control={profileForm.control}
 //                           name="currentPassword"
@@ -435,7 +435,7 @@
 //                               </FormItem>
 //                             )}
 //                           />
-                          
+
 //                           <FormField
 //                             control={profileForm.control}
 //                             name="confirmPassword"
@@ -451,7 +451,7 @@
 //                           />
 //                         </div>
 //                       </div>
-                      
+
 //                       <div className="flex justify-end">
 //                         <Button 
 //                           type="submit" 
@@ -702,7 +702,7 @@ const profileSettingsSchema = z
   });
 
 const AdminSettings: React.FC = () => {
-  const { user } = useAdminAuth();
+  const { user, setUser } = useAdminAuth();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('site');
 
@@ -732,7 +732,7 @@ const AdminSettings: React.FC = () => {
 
   // Site settings mutation
   const siteMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof siteSettingsSchema>) => {
+    mutationFn: async (_values: z.infer<typeof siteSettingsSchema>) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       return { success: true };
     },
@@ -765,11 +765,17 @@ const AdminSettings: React.FC = () => {
           'Content-Type': 'application/json',
         },
       }),
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
         title: 'Profile Updated',
         description: 'Your profile has been successfully updated.',
       });
+      if (data.token) {
+        localStorage.setItem("admin_token", data.token);
+      }
+      if (data.user) {
+        setUser(data.user);
+      }
       profileForm.reset({
         ...profileForm.getValues(),
         currentPassword: '',
@@ -787,58 +793,58 @@ const AdminSettings: React.FC = () => {
   });
 
   // Handle profile picture upload
-const handleProfilePictureUpload = async (file: File) => {
-  const formData = new FormData();
-  formData.append("profilePicture", file);
+  const handleProfilePictureUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append("profilePicture", file);
 
-  try {
-    const response = await fetch(`/api/auth/profile/picture`, {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    try {
+      const response = await fetch(`/api/auth/profile/picture`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+        },
+      });
 
-    if (!response.ok) throw new Error("Upload failed");
+      if (!response.ok) throw new Error("Upload failed");
 
-    const data = await response.json();
-    setUser((prev) => ({ ...prev, profilePicture: data.profilePicture }));
-  } catch (err) {
-    console.error("Image upload failed", err);
-  }
-};
+      const data = await response.json();
+      setUser((prev) => (prev ? { ...prev, profilePicture: data.profilePicture } : null));
+    } catch (err) {
+      console.error("Image upload failed", err);
+    }
+  };
 
-const handleUsernameUpdate = async (newUsername: string) => {
-  try {
-    const res = await fetch("/auth/profile/username", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({ username: newUsername }),
-    });
+  const handleUsernameUpdate = async (newUsername: string) => {
+    try {
+      const res = await fetch("/api/auth/profile/username", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+        },
+        body: JSON.stringify({ username: newUsername }),
+      });
 
-    if (!res.ok) throw new Error("Username update failed");
+      if (!res.ok) throw new Error("Username update failed");
 
-    const data = await res.json();
-    toast({
-      title: "Success",
-      description: "Username updated successfully",
-    });
+      await res.json();
+      toast({
+        title: "Success",
+        description: "Username updated successfully",
+      });
 
-    // reload so avatar + username refresh
-    window.location.reload();
-  } catch (err) {
-    console.error("Error updating username", err);
-    toast({
-      title: "Error",
-      description: "Failed to update username",
-      variant: "destructive",
-    });
-  }
-};
+      // reload so avatar + username refresh
+      window.location.reload();
+    } catch (err) {
+      console.error("Error updating username", err);
+      toast({
+        title: "Error",
+        description: "Failed to update username",
+        variant: "destructive",
+      });
+    }
+  };
 
 
 
@@ -1002,9 +1008,9 @@ const handleUsernameUpdate = async (newUsername: string) => {
                       <Input type="file" accept="image/*" onChange={handleProfilePictureChange} className="mt-2" />
                     </div>
                   </div> */}
-                  <ProfileAvatar  user={user}
-  onUpload={(file) => handleProfilePictureUpload(file)}
-  onUpdateUsername={(newUsername) => handleUsernameUpdate(newUsername)} />
+                  <ProfileAvatar user={user}
+                    onUpload={(file) => handleProfilePictureUpload(file)}
+                    onUpdateUsername={(newUsername) => handleUsernameUpdate(newUsername)} />
 
                   <Form {...profileForm}>
                     <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-6">

@@ -1,0 +1,132 @@
+/* LEARNING HUB STANDARDIZED CSS */
+/* Removing legacy card styles to match the premium design system */
+
+/* HERO SECTION (Migrated to Tailwind, but kept for legacy reference if needed) */
+.animate-wave svg {
+    animation: waveMove 5s linear infinite;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100px); }
+}
+
+/* SKILL ROADMAPS SECTION - ESSENTIAL FUNCTIONAL STYLES */
+.roadmap-title {
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #1e40af;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 12px 28px;
+    border-radius: 16px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 8px 20px rgba(30, 64, 175, 0.15);
+    z-index: 10;
+    position: relative;
+    border: 1px solid rgba(30, 64, 175, 0.1);
+}
+
+.roadmap-glass-box {
+    position: relative;
+    padding: 40px 20px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
+
+.curve-roadmap-wrapper {
+    margin: 40px 0;
+    width: 100%;
+    overflow: visible;
+}
+
+.roadmap-rect {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+    overflow: visible;
+}
+
+.curve-roadmap {
+    width: 100%;
+    height: 320px;
+}
+
+.road-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.pin::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.roadmap-navigation {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-btn {
+    position: relative;
+    top: 40px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: #1e40af;
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(30, 64, 175, 0.35);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.road-svg path:first-child {
+    stroke: #0f2a44;
+    stroke-width: 80px;
+    stroke-linecap: round;
+}
+
+.road-svg path:last-child {
+    stroke: #ffffff;
+    stroke-width: 6px;
+    stroke-dasharray: 18 20;
+    stroke-linecap: round;
+}
+
+@media (max-width: 768px) {
+    .roadmap-glass-box { padding: 25px 15px; }
+    .roadmap-title { font-size: 18px; padding: 8px 16px; margin-bottom: 12px; max-width: 90%; }
+    .roadmap-rect { padding: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .curve-roadmap { height: 200px; min-width: 600px; }
+    .nav-btn { width: 32px; height: 32px; font-size: 14px; top: 25px; flex-shrink: 0; }
+    .roadmap-navigation { gap: 4px; }
+}

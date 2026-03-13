@@ -13,7 +13,7 @@ const PartnerSchools: React.FC = () => {
   const speed = 50; // pixels per second
 
   // Move logos continuously unless paused
-  useAnimationFrame((t, delta) => {
+  useAnimationFrame((_t, delta) => {
     if (!isPaused) {
       baseX.set(baseX.get() - (speed * delta) / 1000);
     }
@@ -29,11 +29,11 @@ const PartnerSchools: React.FC = () => {
   });
 
   return (
-    <section className="py-16 md:py-24 bg-white dark:bg-gray-900">
+    <section className="py-16 md:py-24 bg-blue-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <motion.h2
-            className="text-xl md:text-2xl font-heading font-bold text-deep-navy dark:text-white"
+            className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-[#001D4D] mb-6"
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             variants={fadeUpVariants}

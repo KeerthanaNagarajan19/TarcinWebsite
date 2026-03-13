@@ -69,30 +69,30 @@ export { uploadDir };
 // Profile picture upload directory
 const profileUploadDir = path.join(__dirname, "../../uploads/profile");
 if (!fs.existsSync(profileUploadDir)) {
-    fs.mkdirSync(profileUploadDir, { recursive: true });
+  fs.mkdirSync(profileUploadDir, { recursive: true });
 }
 
 const profileStorage = multer.diskStorage({
-    destination: function (_req, _file, cb) {
-        cb(null, profileUploadDir);
-    },
-    filename: function (_req, file, cb) {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        const ext = path.extname(file.originalname);
-        cb(null, file.fieldname + "-" + uniqueSuffix + ext);
-    },
+  destination: function (_req, _file, cb) {
+    cb(null, profileUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
 });
 
 export const uploadProfile = multer({
-    storage: profileStorage,
-    fileFilter: (_req, file, cb) => {
-        const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-        if (!allowedTypes.includes(file.mimetype)) {
-            cb(new Error("Only jpg, jpeg, and png files are allowed"));
-        } else {
-            cb(null, true);
-        }
-    },
+  storage: profileStorage,
+  fileFilter: (_req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.mimetype)) {
+      cb(new Error("Only jpg, jpeg, and png files are allowed"));
+    } else {
+      cb(null, true);
+    }
+  },
 });
 
 
@@ -120,6 +120,35 @@ export const uploadGallery = multer({
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
     if (!allowedTypes.includes(file.mimetype)) {
       cb(new Error("Only jpg, jpeg, png, and webp files are allowed"));
+    } else {
+      cb(null, true);
+    }
+  },
+});
+
+// Course upload directory (supports images and PDFs for syllabus)
+const courseUploadDir = path.join(__dirname, "../../uploads/courses");
+if (!fs.existsSync(courseUploadDir)) {
+  fs.mkdirSync(courseUploadDir, { recursive: true });
+}
+
+const courseStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, courseUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
+});
+
+export const uploadCourse = multer({
+  storage: courseStorage,
+  fileFilter: (_req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp", "application/pdf"];
+    if (!allowedTypes.includes(file.mimetype)) {
+      cb(new Error("Only images (jpg, png, webp) and PDF files are allowed"));
     } else {
       cb(null, true);
     }

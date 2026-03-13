@@ -1,20 +1,20 @@
 
 import React, { useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { useTranslations } from "../../hooks/use-translations";
+// Removed unused useTranslations
 import { Button } from "../../components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useIsMobile, useBreakpoint, BREAKPOINTS } from "../../hooks/use-mobile";
+import { useBreakpoint } from "../../hooks/use-mobile";
 import logo from "@assets/tarcinblue.png";
 
 
 const SimpleNavbar: React.FC = () => {
-  const { t } = useTranslations();
+
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [location] = useLocation();
   const [scrolled, setScrolled] = React.useState(false);
-  const isMobile = useIsMobile();
+
   const breakpoint = useBreakpoint();
 
   useEffect(() => {
@@ -26,12 +26,12 @@ const SimpleNavbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (["lg", "xl", "xxl"].includes(breakpoint)) setMobileMenuOpen(false);
+    if (breakpoint && ["lg", "xl", "xxl"].includes(breakpoint)) setMobileMenuOpen(false);
   }, [breakpoint]);
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "auto";
-    return () => (document.body.style.overflow = "auto");
+    return () => { document.body.style.overflow = "auto"; };
   }, [mobileMenuOpen]);
 
   const isActive = (path: string) => location === path;
@@ -165,7 +165,8 @@ const SimpleNavbar: React.FC = () => {
               transition={{ delay: 0.1 + index * 0.05 }}
             >
               <Link href={item.path}>
-                <div
+                <a
+                  onClick={() => setMobileMenuOpen(false)}
                   className={`block py-2 text-base font-semibold rounded-md cursor-pointer transition duration-200 border-b-2 ${
                     isActive(item.path)
                       ? "border-blue-500"
@@ -173,17 +174,18 @@ const SimpleNavbar: React.FC = () => {
                   } ${
                     scrolled ? "text-white" : "text-blue-900 hover:text-blue-700"
                   }`}
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.label}
-                </div>
+                </a>
               </Link>
             </motion.div>
           ))}
           <Link href="/contact">
-            <Button className="w-full bg-white text-blue-900 hover:bg-blue-50 border font-bold">
-              {t("nav.getInTouch")} Contact Us
-            </Button>
+            <a onClick={() => setMobileMenuOpen(false)} className="block w-full">
+              <Button className="w-full bg-white text-blue-900 hover:bg-blue-50 border font-bold">
+                Contact Us
+              </Button>
+            </a>
           </Link>
         </div>
       </motion.nav>

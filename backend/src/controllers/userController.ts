@@ -68,6 +68,7 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // ✅ Update user profile (username + password)
 export const updateProfile = async (req: Request, res: Response) => {
@@ -100,7 +101,26 @@ export const updateProfile = async (req: Request, res: Response) => {
     }
 
     await user.save();
-    res.json({ message: "Profile updated successfully" });
+
+    // Generate a new token in case username was updated
+    const token = jwt.sign(
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_SECRET || "secret",
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+        profilePicture: user.profilePicture
+      },
+      token
+    });
+
   } catch (error) {
     console.error("Update profile error:", error);
     res.status(500).json({ message: "Server error", error });
@@ -131,13 +151,20 @@ export const uploadProfilePicture = async (req: Request, res: Response) => {
 // controllers/authController.ts
 
 
-export const updateUsername = async (req, res) => {
+
+export const updateUsername = async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id; // from auth middleware
+    const userId = (req as any).user.id;
     const { username } = req.body;
 
     if (!username) {
       return res.status(400).json({ message: "Username is required" });
+    }
+
+    // Check if username is already taken by another user
+    const existingUser = await User.findOne({ username });
+    if (existingUser && existingUser._id.toString() !== userId) {
+      return res.status(400).json({ message: "Username already taken" });
     }
 
     const user = await User.findByIdAndUpdate(
@@ -146,9 +173,31 @@ export const updateUsername = async (req, res) => {
       { new: true }
     );
 
-    res.json({ success: true, user });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Generate a new token with the updated username
+    const token = jwt.sign(
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_SECRET || "secret",
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      success: true,
+      message: "Username updated successfully",
+      user: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+        profilePicture: user.profilePicture
+      },
+      token
+    });
   } catch (err) {
     console.error("Update username error", err);
     res.status(500).json({ message: "Server error" });
   }
 };
+

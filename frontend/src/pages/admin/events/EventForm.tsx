@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +17,6 @@ import {
 } from "../../../components/ui/form";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
-import { Textarea } from "../../../components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -99,7 +97,7 @@ export default function EventForm({ event, isOpen, onClose }: EventFormProps) {
         title: isEditing ? "Event updated" : "Event created",
         description: "Event has been saved successfully.",
       });
-      queryClient.invalidateQueries(['/api/cms/events']);
+      queryClient.invalidateQueries({ queryKey: ["/api/cms/events"] });
       onClose();
     },
     onError: (err: any) => {
@@ -115,8 +113,8 @@ export default function EventForm({ event, isOpen, onClose }: EventFormProps) {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("date", values.date);
-    formData.append("endDate", values.endDate || "");
+    formData.append("date", values.date ? new Date(values.date).toISOString() : "");
+    formData.append("endDate", values.endDate ? new Date(values.endDate).toISOString() : "");
     formData.append("location", values.location);
     formData.append("registrationLink", values.registrationLink || "");
     formData.append("isUpcoming", values.isUpcoming.toString());

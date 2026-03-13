@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "../../hooks/use-translations";
 import useScrollAnimation from "../../hooks/use-scroll-animation";
@@ -131,26 +131,122 @@ const serviceTabs: ServiceTab[] = [
     caseStudy: {
       title: "School Network Implementation",
       description: "A network of schools in Tamil Nadu implemented our Code Asthram platform, enhancing coding education for over 2,000 students.",
-     image:edu,
+      image: edu,
       // image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&h=500&q=80",
     },
   },
 ];
+
+/* ── Premium 3D Tilt Image Card ── */
+const TiltImageCard: React.FC<{
+  image: string;
+  title: string;
+  description: string;
+  isVisible: boolean;
+  isActive: boolean;
+}> = ({ image, title, description, isVisible, isActive }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [shine, setShine] = useState({ x: 50, y: 50 });
+  const [hovered, setHovered] = useState(false);
+  const rafRef = useRef<number>(0);
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const cx = (e.clientX - rect.left) / rect.width;   // 0→1
+    const cy = (e.clientY - rect.top) / rect.height;   // 0→1
+    // rotateY: left=negative, right=positive (max ±12°)
+    // rotateX: top=positive, bottom=negative (max ±8°)
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      setTilt({ x: (cy - 0.5) * -14, y: (cx - 0.5) * 18 });
+      setShine({ x: cx * 100, y: cy * 100 });
+    });
+  }, []);
+
+  const onLeave = () => {
+    setHovered(false);
+    setTilt({ x: 0, y: 0 });
+    setShine({ x: 50, y: 50 });
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={isVisible && isActive ? "visible" : "hidden"}
+      variants={slideInRightVariants}
+      style={{ perspective: 1000 }}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={onMove}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={onLeave}
+        style={{
+          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: hovered ? "transform 0.08s linear" : "transform 0.5s ease",
+          transformStyle: "preserve-3d",
+        }}
+        className="relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg will-change-transform"
+      >
+        {/* Shine overlay */}
+        <div
+          className="absolute inset-0 z-10 pointer-events-none rounded-xl transition-opacity duration-300"
+          style={{
+            opacity: hovered ? 0.12 : 0,
+            background: `radial-gradient(circle at ${shine.x}% ${shine.y}%, rgba(255,255,255,0.9) 0%, transparent 60%)`,
+          }}
+        />
+
+        {/* Glowing border on hover */}
+        <div
+          className="absolute inset-0 z-10 pointer-events-none rounded-xl transition-opacity duration-300"
+          style={{
+            opacity: hovered ? 1 : 0,
+            boxShadow: "0 0 0 1.5px rgba(59,130,246,0.5), 0 20px 60px -10px rgba(59,130,246,0.2)",
+          }}
+        />
+
+        {/* Image with zoom */}
+        <div className="overflow-hidden">
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-64 object-cover object-center transition-transform duration-500"
+            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+          />
+          {/* Dark gradient over image */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent" />
+        </div>
+
+        {/* Text content */}
+        <div className="p-6" style={{ transform: "translateZ(10px)" }}>
+          <h4 className="text-xl font-heading font-black text-black mb-2 tracking-tight">
+            Case Study: {title}
+          </h4>
+          <p className="text-slate-500 font-medium text-sm md:text-base leading-relaxed">{description}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const ServicesSection: React.FC = () => {
   const { t } = useTranslations();
   const { elementRef, isVisible } = useScrollAnimation();
   const [activeTab, setActiveTab] = useState("erp");
 
-const location = useLocation();
-const searchParams = new URLSearchParams(location.search);
-const tabFromUrl = searchParams.get("tab") || "erp";
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const tabFromUrl = searchParams.get("tab") || "erp";
 
-useEffect(() => {
-  const params = new URLSearchParams(location.search);
-  const newTab = params.get("tab") || "erp";
-  setActiveTab(newTab);
-}, [location.search]);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const newTab = params.get("tab") || "erp";
+    setActiveTab(newTab);
+  }, [location.search]);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -165,11 +261,11 @@ useEffect(() => {
   }, []);
 
   return (
-    <section id="services" className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
+    <section id="services" className="py-16 md:py-24 bg-slate-50 dark:bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.h2
-            className="text-xl md:text-2xl font-heading font-bold text-deep-navy dark:text-white"
+            className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-black mb-6 md:mb-8 tracking-tight"
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             variants={fadeUpVariants}
@@ -177,7 +273,7 @@ useEffect(() => {
             Service Offerings
           </motion.h2>
           <motion.p
-            className="mt-4 text-base text-deep-navy dark:text-gray-300 max-w-3xl mx-auto"
+            className="mt-4 text-lg md:text-xl text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed"
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             variants={fadeUpVariants}
@@ -187,16 +283,16 @@ useEffect(() => {
           </motion.p>
         </div>
 
-       <Tabs
-      defaultValue="erp"
-      value={activeTab}
-      onValueChange={setActiveTab}
-      ref={elementRef as React.RefObject<HTMLDivElement>}
-    >
-      {/* ✅ Desktop Tabs */}
-      {!isMobile && (
-        <TabsList
-          className="
+        <Tabs
+          defaultValue="erp"
+          value={activeTab}
+          onValueChange={setActiveTab}
+          ref={elementRef as React.RefObject<HTMLDivElement>}
+        >
+          {/* ✅ Desktop Tabs */}
+          {!isMobile && (
+            <TabsList
+              className="
             mb-8
             flex
             border-b border-gray-200 dark:border-gray-700
@@ -208,85 +304,75 @@ useEffect(() => {
             flex-wrap
             md:flex-nowrap
           "
-        >
-          {serviceTabs.map((tab) => (
-            <TabsTrigger
-              key={tab.id}
-              value={tab.id}
-              className={`px-4 sm:px-8 py-4 font-medium ${
-                activeTab === tab.id
-                  ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400"
-                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
             >
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      )}
+              {serviceTabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.id}
+                  value={tab.id}
+                  className={`px-6 sm:px-10 py-5 text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${activeTab === tab.id
+                    ? "text-blue-600 border-b-2 border-blue-600 bg-white shadow-xl shadow-blue-900/5 lg:rounded-t-2xl"
+                    : "text-slate-400 hover:text-blue-600"
+                    }`}
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          )}
 
-      {/* ✅ Mobile Dropdown */}
-      {isMobile && (
-        <div className="mb-6 px-2">
-          <select
-            value={activeTab}
-            onChange={(e) => setActiveTab(e.target.value)}
-            className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-4 py-2 text-gray-700 dark:text-gray-100 bg-white dark:bg-gray-800"
-          >
-            {serviceTabs.map((tab) => (
-              <option key={tab.id} value={tab.id}>
-                {tab.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {/* ✅ Tab Content */}
-      {serviceTabs.map((tab) => (
-        <TabsContent key={tab.id} value={tab.id} className="outline-none">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial="hidden"
-              animate={isVisible && activeTab === tab.id ? "visible" : "hidden"}
-              variants={slideInLeftVariants}
-            >
-              <h3 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">
-                {tab.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">{tab.description}</p>
-              <ul className="space-y-3 mb-8">
-                {tab.features.map((feature, index) => (
-                  <li key={index} className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                    <span className="ml-3 text-gray-600 dark:text-gray-300">{feature}</span>
-                  </li>
+          {/* ✅ Mobile Dropdown */}
+          {isMobile && (
+            <div className="mb-6 px-2">
+              <select
+                value={activeTab}
+                onChange={(e) => setActiveTab(e.target.value)}
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-4 py-2 text-gray-700 dark:text-gray-100 bg-white dark:bg-gray-800"
+              >
+                {serviceTabs.map((tab) => (
+                  <option key={tab.id} value={tab.id}>
+                    {tab.label}
+                  </option>
                 ))}
-              </ul>
-            </motion.div>
+              </select>
+            </div>
+          )}
 
-            <motion.div
-              initial="hidden"
-              animate={isVisible && activeTab === tab.id ? "visible" : "hidden"}
-              variants={slideInRightVariants}
-              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg"
-            >
-              <img
-                src={tab.caseStudy.image}
-                alt={tab.caseStudy.title}
-                className="w-full h-64 object-cover object-center"
-              />
-              <div className="p-6">
-                <h4 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-2">
-                  Case Study: {tab.caseStudy.title}
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{tab.caseStudy.description}</p>
+          {/* ✅ Tab Content */}
+          {serviceTabs.map((tab) => (
+            <TabsContent key={tab.id} value={tab.id} className="outline-none">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <motion.div
+                  initial="hidden"
+                  animate={isVisible && activeTab === tab.id ? "visible" : "hidden"}
+                  variants={slideInLeftVariants}
+                >
+                  <h3 className="text-2xl md:text-4xl font-heading font-black text-black mb-6 tracking-tight">
+                    {tab.title}
+                  </h3>
+                  <p className="text-sm md:text-lg text-slate-500 mb-8 font-medium leading-relaxed">{tab.description}</p>
+                  <ul className="space-y-4 mb-10">
+                    {tab.features.map((feature, index) => (
+                      <li key={index} className="flex items-start group/list">
+                        <div className="mr-4 mt-1 bg-green-50 rounded-lg p-1 group-hover/list:bg-green-100 transition-colors">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                        </div>
+                        <span className="text-slate-500 font-medium text-sm md:text-base leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                <TiltImageCard
+                  image={tab.caseStudy.image}
+                  title={tab.caseStudy.title}
+                  description={tab.caseStudy.description}
+                  isVisible={isVisible}
+                  isActive={activeTab === tab.id}
+                />
               </div>
-            </motion.div>
-          </div>
-        </TabsContent>
-      ))}
-    </Tabs>
+            </TabsContent>
+          ))}
+        </Tabs>
       </div>
     </section>
   );

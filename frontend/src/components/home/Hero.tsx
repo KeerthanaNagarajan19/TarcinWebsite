@@ -1,78 +1,96 @@
 import React from "react";
 import { TechChip3D } from "../../components/shared/TechChip3D";
-import { ArrowDown } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Sparkles, Activity } from "lucide-react";
 import { motion } from "framer-motion";
-import {Link} from "react-router-dom"
 
 const Hero: React.FC = () => {
-  const scrollToNextSection = () => {
-    const nextSection = document.getElementById("orb-narrative");
-    if (nextSection) {
-      nextSection.scrollIntoView({ 
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-  };
-
   return (
-    <section className="relative min-h-60 overflow-hidden flex items-center bg-gradient-to-br from-white to-blue-50">
-      {/* Background elements */}
-      <div className="absolute w-full h-full top-0 left-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-100 rounded-bl-full opacity-50"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-blue-200 rounded-tr-full opacity-40"></div>
-        <div className="absolute top-1/4 left-1/5 w-32 h-32 bg-blue-50 rounded-full opacity-30 blur-2xl"></div>
-        <div className="absolute bottom-1/4 right-1/5 w-24 h-24 bg-blue-50 rounded-full opacity-30 blur-xl"></div>
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-white">
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
+        {/* Abstract Gradient Orbs */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[50%] bg-blue-400/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[60%] bg-indigo-400/20 rounded-full blur-[120px]" />
       </div>
-      
-      <div className="container-fluid relative z-10 mx-auto py-12 sm:py-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Hero Content */}
-          <div className="order-2 lg:order-1 space-y-6 max-w-2xl">
-            <h1 className="text-justify text-3xl sm:text-4xl lg:text-5xl font-extrabold text-blue-950 leading-tight">
-              Deep-Tech.<br/> Thoughtfully Engineered
-            </h1>
-            <p className="text-justify text-lg sm:text-xl text-gray-700">
-              TARCIN, We are a Deep-Tech StartUp creating execution-first solutions across Robotic, IoT, AI, Data Science, Observability, and Custom Software. We operate at the intersection of engineering depth and practical impact.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/products">
-              <button className="bg-blue-700 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-800 transition">
-                Explore Our Work
-              </button>
+
+      <div className="max-w-7xl relative z-10 mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 pt-32 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Hero Content text */}
+          <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
+            {/* Pill Badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100/50 shadow-sm mx-auto lg:mx-0"
+            >
+              <Sparkles className="w-4 h-4 text-blue-600" />
+              <span className="text-xs font-bold text-blue-700 uppercase tracking-[0.15em]">The Future of Automation</span>
+            </motion.div>
+
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-black text-slate-900 leading-[1.05] tracking-tight"
+            >
+              Deep-Tech.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                Thoughtfully<br />Engineered
+              </span>
+            </motion.h1>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+            >
+              TARCIN is a deep-tech startup creating execution-first solutions across Robotic, IoT, AI, Data Science, Observability, and Custom Software. We operate at the intersection of engineering depth and practical impact.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4"
+            >
+              <Link 
+                to="/products"
+                className="group relative inline-flex items-center justify-center bg-slate-900 text-white px-8 py-4 rounded-2xl overflow-hidden font-bold transition-transform hover:scale-105 active:scale-95 w-full sm:w-auto shadow-xl shadow-slate-900/20"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative flex items-center gap-2">
+                  Explore Our Work <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
               </Link>
-              <Link to="/services">
-              <button className="border border-blue-700 text-blue-700 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
-                See Our Services
-              </button>
+
+              <Link 
+                to="/services"
+                className="group inline-flex items-center justify-center bg-white text-slate-900 border-2 border-slate-200 px-8 py-4 rounded-2xl font-bold transition-all hover:border-slate-900 hover:bg-slate-50 active:scale-95 w-full sm:w-auto"
+              >
+                <span className="flex items-center gap-2">
+                  See Our Services
+                </span>
               </Link>
+            </motion.div>
+          </div>
+
+          {/* Right Column / Visual */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-5 relative mt-16 lg:mt-0 flex justify-center"
+          >
+            <div className="relative z-10 w-full max-w-lg transform hover:-translate-y-4 transition-transform duration-500 ease-out">
+               <TechChip3D />
             </div>
-          </div>
+          </motion.div>
 
-          {/* 3D Tech Chip Visualization */}
-          <div className="order-1 lg:order-2 flex justify-center">
-            <TechChip3D />
-          </div>
         </div>
-
-        {/* Scroll indicator - now clickable */}
-        {/* <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-pointer hover:opacity-80 transition-opacity"
-          onClick={scrollToNextSection}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ 
-            duration: 1.5, 
-            ease: "easeInOut", 
-            repeat: Infinity 
-          }}
-          role="button"
-          aria-label="Scroll to next section"
-        >
-          <span className="text-sm text-blue-900 font-medium mb-2 bg-white px-3 py-1 rounded-full shadow-sm">
-            Scroll Down
-          </span>
-          <ArrowDown className="h-5 w-5 text-blue-900 bg-white rounded-full p-1 shadow-sm" />
-        </motion.div> */}
       </div>
     </section>
   );

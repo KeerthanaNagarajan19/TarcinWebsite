@@ -24,7 +24,7 @@ const DocumentHead: React.FC<DocumentHeadProps> = ({
   const currentUrl = url || (typeof window !== "undefined" ? window.location.href : "");
   
   // Ensure title includes the company name
-  const fullTitle = title.includes("Tarcin Robotic") ? title : `${title} | Tarcin Robotic`;
+  const fullTitle = title.includes("Tarcin") ? title : `${title} | Tarcin`;
   
   return (
     <Helmet>

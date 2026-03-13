@@ -6,7 +6,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { useToast } from "../../hooks/use-toast";
 // import { apiRequest } from "../../lib/queryClient";
-import axios from "axios";
+
 
 const Newsletter: React.FC = () => {
   const { elementRef, isVisible } = useScrollAnimation();
@@ -61,15 +61,7 @@ const Newsletter: React.FC = () => {
     }
   };
 
-  // Optional: keep axios helper if you use it elsewhere
-  const handleSubscribe = async () => {
-    try {
-      await axios.post("/api/newsletter/subscribe", { email });
-      alert("Subscription successful!");
-    } catch (error) {
-      alert("Already subscribed or error occurred.");
-    }
-  };
+
 
   return (
     <section className="py-12 bg-gray-50 dark:bg-gray-900">
@@ -84,10 +76,10 @@ const Newsletter: React.FC = () => {
             animate={isVisible ? "visible" : "hidden"}
             variants={fadeUpVariants}
           >
-            <h3 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white">
+            <h3 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-[#001D4D] dark:text-white mb-6">
               Stay Updated
             </h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
+            <p className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 font-medium max-w-3xl mx-auto leading-relaxed">
               Subscribe to our newsletter for the latest updates on robotics, AI, and educational technology.
             </p>
           </motion.div>
@@ -103,14 +95,14 @@ const Newsletter: React.FC = () => {
             <Input
               type="email"
               placeholder="Enter your email"
-              className="flex-grow px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+              className="flex-grow px-4 py-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-[48px]"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
             <Button
               type="submit"
-              className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors wave-btn whitespace-nowrap"
+              className="px-8 py-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold transition-colors wave-btn whitespace-nowrap min-h-[48px]"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Subscribing..." : "Subscribe Now"}
@@ -118,7 +110,7 @@ const Newsletter: React.FC = () => {
           </motion.form>
 
           <motion.p
-            className="text-sm text-gray-500 dark:text-gray-400 text-center mt-4"
+            className="text-sm text-gray-600 dark:text-gray-400 text-center mt-4"
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             variants={fadeUpVariants}

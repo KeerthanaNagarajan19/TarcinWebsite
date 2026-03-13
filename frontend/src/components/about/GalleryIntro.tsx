@@ -10,14 +10,14 @@ const GalleryIntro: React.FC<GalleryIntroProps> = ({ imageSrc }) => {
   const fallback = "/images/gallery-intro.jpg"; // fallback image in /public/images
 
   return (
-    <section className="relative bg-white py-12">
+    <section className="relative bg-transparent py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Heading */}
-<div className="text-center mb-10">
-  <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+<div className="text-center mb-16">
+  <h2 className="text-4xl md:text-6xl font-heading font-black text-black tracking-tight leading-tight mb-6">
     About Our Gallery
   </h2>
-  <p className="max-w-2xl mx-auto text-md md:text-lg text-slate-600 mt-3">
+  <p className="text-slate-500 font-medium text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
     A glimpse into our events, sessions, and fun activities that showcase
     the culture and creativity of Tarcin.
   </p>
@@ -29,16 +29,16 @@ const GalleryIntro: React.FC<GalleryIntroProps> = ({ imageSrc }) => {
             <img
               src={gallery}
               alt="Gallery intro"
-              className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
+              className="w-full h-80 md:h-[450px] object-cover rounded-[2.5rem] shadow-2xl shadow-blue-900/10 border border-slate-50"
             />
           </div>
 
           {/* Right: Text */}
           <div className="w-full md:w-1/2 text-center md:text-left">
-            <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
+            <h3 className="text-2xl md:text-3xl font-heading font-black text-black mb-4 tracking-tight">
               Our Journey in Frames
             </h3>
-            <p className="mt-3 text-slate-600 leading-relaxed">
+            <p className="text-slate-500 font-medium text-sm md:text-base leading-relaxed">
               From inspiring sessions to team-building activities, the Tarcin
               Gallery captures the energy and human side of our work. Each photo
               is a window into the moments that shaped our projects, our
@@ -46,16 +46,16 @@ const GalleryIntro: React.FC<GalleryIntroProps> = ({ imageSrc }) => {
             </p>
 
             {/* Buttons */}
-            <div className="mt-5 flex flex-col sm:flex-row items-center sm:items-start justify-center md:justify-start gap-3">
+            <div className="mt-8 flex flex-col sm:flex-row items-center sm:items-start justify-center md:justify-start gap-4">
               <a
                 href="/gallery"
-                className="px-5 py-2 rounded bg-blue-600 text-white text-sm font-medium shadow hover:bg-blue-700 transition"
+                className="px-8 py-4 rounded-xl bg-black text-white text-[11px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-black/10 hover:bg-slate-900 transition-all hover:-translate-y-1"
               >
                 Explore full gallery
               </a>
               <a
                 href="/contact"
-                className="px-5 py-2 rounded border border-slate-300 bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 transition"
+                className="px-8 py-4 rounded-xl border border-slate-200 bg-white text-[11px] font-bold text-slate-600 uppercase tracking-[0.2em] hover:bg-slate-50 transition-all shadow-sm hover:-translate-y-1"
               >
                 Request a feature
               </a>

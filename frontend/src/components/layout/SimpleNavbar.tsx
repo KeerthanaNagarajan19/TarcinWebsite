@@ -8,7 +8,8 @@ import logo from "@assets/tarcinblue.png";
 const SimpleNavbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
-const [manualToggle, setManualToggle] = useState(false);
+  const [knowUsOpen, setKnowUsOpen] = useState(false);
+  const [manualToggle, setManualToggle] = useState(false);
 
   const [location] = useLocation();
   const [scrolled, setScrolled] = useState(false);
@@ -23,34 +24,88 @@ const [manualToggle, setManualToggle] = useState(false);
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-blue-900 shadow-lg" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-blue-900 shadow-lg" : "bg-transparent"
+        }`}
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <a href="/" className="flex items-center">
-            <img src={logo} alt="Tarcin Logo" className="h-16 w-auto drop-shadow-md" />
+            <img
+              src={logo}
+              alt="Tarcin Logo"
+              className="h-16 w-auto drop-shadow-md"
+              style={{
+                filter: scrolled
+                  ? "brightness(0) invert(1)" // Pure white when on dark navy background
+                  : "hue-rotate(5deg) brightness(0.3) saturate(2.5)" // Dark navy when on light background
+              }}
+            />
           </a>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6" aria-label="Main Navigation">
             {[
               { label: "Overview", path: "/" },
-              { label: "Know Us", path: "/about" },
+            ].map((item) => (
+              <Link href={item.path} key={item.path}>
+                <div
+                  className={`text-lg font-heading font-semibold cursor-pointer border-b-2 px-2 py-1 transition duration-200 ${isActive(item.path)
+                    ? "border-blue-500 text-blue-700"
+                    : "border-transparent hover:border-blue-500 hover:text-blue-700"
+                    } ${scrolled ? "text-white" : "text-blue-900"}`}
+                >
+                  {item.label}
+                </div>
+              </Link>
+            ))}
+
+            {/* Desktop Know Us Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setKnowUsOpen(true)}
+              onMouseLeave={() => setKnowUsOpen(false)}
+            >
+              <div
+                className={`flex items-center gap-1 text-lg font-heading font-semibold px-2 py-1 border-b-2 transition duration-200 cursor-pointer ${knowUsOpen ? "border-blue-500 text-blue-700" : "border-transparent hover:border-blue-500"
+                  } ${scrolled ? "text-white" : "text-blue-900"}`}
+              >
+                Know Us <ChevronDown size={18} />
+              </div>
+
+              <AnimatePresence>
+                {knowUsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute left-0 mt-2 bg-white rounded-md shadow-lg w-48 z-50 text-md text-blue-900"
+                  >
+                    {[
+                      { label: "About Us", path: "/about" },
+                      { label: "Gallery", path: "/gallery" },
+                    ].map((subItem) => (
+                      <Link href={subItem.path} key={subItem.path} onClick={() => setKnowUsOpen(false)}>
+                        <div className="px-4 py-2 hover:bg-blue-50 cursor-pointer">{subItem.label}</div>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {[
               { label: "Our Service", path: "/services" },
               { label: "Our Products", path: "/products" },
               { label: "Learning Hub", path: "/courses" },
             ].map((item) => (
               <Link href={item.path} key={item.path}>
                 <div
-                  className={`text-lg font-semibold cursor-pointer border-b-2 px-2 py-1 transition duration-200 ${
-                    isActive(item.path)
-                      ? "border-blue-500 text-blue-700"
-                      : "border-transparent hover:border-blue-500 hover:text-blue-700"
-                  } ${scrolled ? "text-white" : "text-blue-900"}`}
+                  className={`text-lg font-heading font-semibold cursor-pointer border-b-2 px-2 py-1 transition duration-200 ${isActive(item.path)
+                    ? "border-blue-500 text-blue-700"
+                    : "border-transparent hover:border-blue-500 hover:text-blue-700"
+                    } ${scrolled ? "text-white" : "text-blue-900"}`}
                 >
                   {item.label}
                 </div>
@@ -58,65 +113,67 @@ const [manualToggle, setManualToggle] = useState(false);
             ))}
 
             {/* Desktop Community Dropdown */}
-<div
-  className="relative"
-  onMouseEnter={() => !manualToggle && setCommunityOpen(true)}
-  onMouseLeave={() => !manualToggle && setCommunityOpen(false)}
->
-  <button
-    onClick={() => {
-      const newState = !communityOpen;
-      setCommunityOpen(newState);
-      setManualToggle(newState);
-    }}
-    className={`flex items-center gap-1 text-lg font-semibold px-2 py-1 border-b-2 transition duration-200 ${
-      communityOpen ? "border-blue-500 text-blue-700" : "border-transparent hover:border-blue-500"
-    } ${scrolled ? "text-white" : "text-blue-900"}`}
-  >
-    Explore <ChevronDown size={16} />
-  </button>
+            <div
+              className="relative"
+              onMouseEnter={() => !manualToggle && setCommunityOpen(true)}
+              onMouseLeave={() => !manualToggle && setCommunityOpen(false)}
+            >
+              <button
+                onClick={() => {
+                  const newState = !communityOpen;
+                  setCommunityOpen(newState);
+                  setManualToggle(newState);
+                }}
+                className={`flex items-center gap-1 text-lg font-heading font-semibold px-2 py-1 border-b-2 transition duration-200 ${communityOpen ? "border-blue-500 text-blue-700" : "border-transparent hover:border-blue-500"
+                  } ${scrolled ? "text-white" : "text-blue-900"}`}
+              >
+                Explore <ChevronDown size={18} />
+              </button>
 
-  <AnimatePresence>
-    {communityOpen && (
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        className="absolute right-0 mt-2 bg-white rounded-md shadow-lg w-48 z-50 text-md text-blue-900"
-        onMouseEnter={() => !manualToggle && setCommunityOpen(true)}
-        onMouseLeave={() => !manualToggle && setCommunityOpen(false)}
-      >
-        {[
-          { label: "Blog", path: "/blog" },
-          { label: "Event", path: "/events" },
-          { label: "Join Our Team", path: "/careers" },
-          { label: "S2P Network", path: "/s2p-community" },
-          { label: "Tutor", path: "/tutor" },
-        ].map((item) => (
-          <Link href={item.path} key={item.path} onClick={() => setCommunityOpen(false)}>
-            <div className="px-4 py-2 hover:bg-blue-50 cursor-pointer">{item.label}</div>
-          </Link>
-        ))}
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+              <AnimatePresence>
+                {communityOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute right-0 mt-2 bg-white rounded-md shadow-lg w-48 z-50 text-md text-blue-900"
+                    onMouseEnter={() => !manualToggle && setCommunityOpen(true)}
+                    onMouseLeave={() => !manualToggle && setCommunityOpen(false)}
+                  >
+                    {[
+                      { label: "Blog", path: "/blog" },
+                      { label: "Event", path: "/events" },
+                      { label: "Join Our Team", path: "/careers" },
+                      { label: "S2P Network", path: "/s2p-community" },
+                      { label: "Tutor", path: "/tutor" },
+                    ].map((item) => (
+                      <Link href={item.path} key={item.path} onClick={() => setCommunityOpen(false)}>
+                        <div className="px-4 py-2 hover:bg-blue-50 cursor-pointer">{item.label}</div>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
 
             <Link href="/contact">
-              <button  className={`ml-4 px-4 py-2 text-base font-bold rounded transition duration-200 ${
-      scrolled
-        ? "bg-white text-blue-900 hover:bg-gray-100"
-        : "bg-blue-900 text-white hover:bg-blue-800"
-    }`}>
+              <button className={`ml-4 px-6 py-2 text-lg font-heading font-bold rounded-lg transition duration-200 ${scrolled
+                ? "bg-white text-blue-900 hover:bg-gray-100 shadow-md"
+                : "bg-blue-900 text-white hover:bg-blue-800 shadow-lg"
+                }`}>
                 Let's Connect
               </button>
             </Link>
           </nav>
 
-          {/* Mobile Menu Toggle Button */}
           <div className="lg:hidden">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2">
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+              className="p-2"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+            >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -135,10 +192,11 @@ const [manualToggle, setManualToggle] = useState(false);
           >
             {[
               { label: "Overview", path: "/" },
-              { label: "Our Story", path: "/about" },
+              { label: "About Us", path: "/about" },
+              { label: "Gallery", path: "/gallery" },
               { label: "Our Service", path: "/services" },
               { label: "Our Products", path: "/products" },
-              { label: "Learning Hub", path: "/courses" },,
+              { label: "Learning Hub", path: "/courses" },
               { label: "Blog", path: "/blog" },
               { label: "Events", path: "/events" },
               { label: "Join Our Team", path: "/careers" },
@@ -146,14 +204,22 @@ const [manualToggle, setManualToggle] = useState(false);
               { label: "Tutor", path: "/tutor" },
             ].map((item) => (
               <Link href={item.path} key={item.path}>
-                <div className="py-2 font-semibold text-blue-900">{item.label}</div>
+                <a
+                  className="block py-3 font-semibold text-blue-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
               </Link>
             ))}
 
             <Link href="/contact">
-              <div className="mt-4 px-4 py-2 text-center bg-blue-900 text-white font-bold rounded">
+              <a
+                className="block mt-4 px-4 py-2 text-center bg-blue-900 text-white font-bold rounded"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Let's Connect
-              </div>
+              </a>
             </Link>
           </motion.nav>
         )}

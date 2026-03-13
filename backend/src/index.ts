@@ -3,7 +3,7 @@ import express from "express";
 import dotenvFlow from "dotenv-flow"; // 👈 osama changes
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/authRoutes";
-import app from "./app"; 
+import app from "./app";
 import { sendDigest } from "./utils/newsletter";
 
 // Load correct env based on NODE_ENV
@@ -23,8 +23,8 @@ connectDB().then(() => {
 
 const SCHEDULE_DIGEST = false;
 if (SCHEDULE_DIGEST) {
+  const dayMs = 24 * 60 * 60 * 1000;
   setInterval(() => {
-    const dayMs = 24 * 60 * 60 * 1000;
     sendDigest("daily").catch(console.error);
   }, dayMs);
 }

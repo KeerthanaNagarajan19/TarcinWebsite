@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     /* Language and Environment */
@@ -7,15 +6,18 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-
     /* Added for file-based Node backend */
-    "resolveJsonModule": true,        // Allows importing JSON files
-    "rootDir": "./src",               // Source folder
-    "outDir": "./dist",               // Output compiled JS here
-
+    "resolveJsonModule": true, // Allows importing JSON files
+    "rootDir": "./src", // Source folder
+    "outDir": "./dist", // Output compiled JS here
     /* Skip type checking of libs */
     "skipLibCheck": true,
-   
   },
-   "exclude": ["node_modules"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "generatetoken.ts"
+  ]
 }

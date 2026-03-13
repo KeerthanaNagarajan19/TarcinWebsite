@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useRoute, useLocation } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
@@ -119,9 +119,8 @@ function ShareMenu({ post }: ShareMenuProps) {
 
       {/* Popover fallback (WhatsApp / Copy link) */}
       <div
-        className={`absolute top-full right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 transform origin-top-right ${
-          open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
-        } transition-all duration-150`}
+        className={`absolute top-full right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 transform origin-top-right ${open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
+          } transition-all duration-150`}
         role="menu"
         aria-hidden={!open}
       >
@@ -233,20 +232,24 @@ const BlogPost: React.FC = () => {
           <header>
             {/* Featured Image */}
             {post.image && (
-              <div className="rounded-3xl overflow-hidden shadow-md mb-10">
-                <img
-                
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-96 object-cover hover:scale-105 transition-transform duration-500"
-                />
+              <div className="flex justify-center mb-12">
+                <div className="rounded-[32px] overflow-hidden shadow-xl border border-gray-100/50 bg-white">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="max-h-[600px] w-auto block object-contain transition-transform duration-500 hover:scale-[1.02]"
+                  />
+                </div>
               </div>
             )}
 
             {/* Post Meta */}
             <div className="space-y-6">
               <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">{post.title}</h1>
-              <p className="text-lg text-gray-700 leading-relaxed">{post.summary}</p>
+              <div
+                className="text-lg text-gray-700 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: post.summary || "" }}
+              />
 
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                 <div className="flex items-center">
@@ -262,7 +265,7 @@ const BlogPost: React.FC = () => {
                 <div className="ml-auto">{post && <ShareMenu post={post} />}</div>
               </div>
 
-              {post.tags?.length > 0 && (
+              {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <Badge

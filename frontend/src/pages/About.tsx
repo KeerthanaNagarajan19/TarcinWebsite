@@ -1,26 +1,12 @@
 import React from "react";
 import DocumentHead from "../components/shared/DocumentHead";
 import { motion } from "framer-motion";
-import OrbNarrative from "../components/home/OrbNarrative";
 import Stats from "../components/home/Stats";
 import Testimonials from "../components/home/Testimonials";
 import Newsletter from "../components/home/Newsletter";
-import { fadeUpVariants, staggerContainerVariants } from "../lib/animations";
 import useScrollAnimation from "../hooks/use-scroll-animation";
 import AboutSection from "../components/about/AboutSection";
 import GalleryIntro from "@/components/about/GalleryIntro";
-
-
-const alaudin = "../../assets/alaudin.jpg"
-
-interface TeamMember {
-  id: number;
-  name: string;
-  position: string;
-  image: string;
-  bio: string;
-  linkedin: string;
-}
 
 interface TimelineEvent {
   year: string;
@@ -33,42 +19,6 @@ interface Value {
   title: string;
   description: string;
 }
-
-// Note: Using placeholder data for team members - should be replaced with actual team photos and bios
-const teamMembers: TeamMember[] = [
-  {
-    id: 1,
-    name: "A Alaudeen",
-    position: "Founder & CEO",
-    image: alaudin,
-    bio: "Our leadership team brings deep technical expertise and regional understanding, with a focus on execution and product-driven solutions.",
-    linkedin: "https://linkedin.com",
-  },
-  {
-    id: 2,
-    name: "Technical Team",
-    position: "Engineering",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
-    bio: "Our engineering team specializes in robotics prototyping, IoT systems, embedded development, AI integration, and custom software solutions.",
-    linkedin: "https://linkedin.com",
-  },
-  // {
-  //   id: 3,
-  //   name: "Product Team",
-  //   position: "Product Development",
-  //   image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
-  //   bio: "Product specialists focused on creating scalable solutions across our Code Asthram, SproutED LMS, CRM systems, and IoT offerings for customers.",
-  //   linkedin: "https://linkedin.com",
-  // },
-  // {
-  //   id: 4,
-  //   name: "Education Team",
-  //   position: "Educational Initiatives",
-  //   image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
-  //   bio: "Our education specialists work closely with 50+ institutions across Tamil Nadu to implement training programs and Centre of Excellence setups.",
-  //   linkedin: "https://linkedin.com",
-  // },
-];
 
 const timelineEvents: TimelineEvent[] = [
   {
@@ -104,349 +54,275 @@ const timelineEvents: TimelineEvent[] = [
 ];
 
 const values: Value[] = [
-  {
-    icon: "ri-lightbulb-line",
-    title: "Execution",
-    description: "We prioritize real-world implementation over hype, focusing on practical solutions that work reliably."
-  },
-  {
-    icon: "ri-building-2-line",
-    title: "Regional Grounding",
-    description: "We are deeply rooted in Tamil Nadu and understand the unique needs of our regional ecosystem."
-  },
-  {
-    icon: "ri-team-line",
-    title: "Student Ecosystems",
-    description: "We leverage grassroots student talent to drive innovation without expensive overhead."
-  },
-  {
-    icon: "ri-tools-line",
-    title: "Product + Service",
-    description: "We blend products and services with community engagement to create comprehensive technology solutions."
-  },
+  { icon: "ri-lightbulb-line", title: "Execution", description: "We prioritize real-world implementation over hype, focusing on practical solutions that work reliably." },
+  { icon: "ri-building-2-line", title: "Regional Grounding", description: "We are deeply rooted in Tamil Nadu and understand the unique needs of our regional ecosystem." },
+  { icon: "ri-team-line", title: "Student Ecosystems", description: "We leverage grassroots student talent to drive innovation without expensive overhead." },
+  { icon: "ri-tools-line", title: "Product + Service", description: "We blend products and services with community engagement to create comprehensive technology solutions." },
 ];
 
 const AboutPage: React.FC = () => {
-  const { elementRef: teamRef, isVisible: teamVisible } = useScrollAnimation();
-  const { elementRef: timelineRef, isVisible: timelineVisible } = useScrollAnimation();
-  const { elementRef: valuesRef, isVisible: valuesVisible } = useScrollAnimation();
+  const { elementRef: timelineRef } = useScrollAnimation();
+  const { elementRef: valuesRef } = useScrollAnimation();
 
   return (
     <>
       <DocumentHead
-        title="About Us | Tarcin Robotic LLP"
-        description="Learn about Tarcin Robotic LLP - our mission, team, history, and values driving innovation in robotics, IoT, AI, and educational technology based in Madurai, Tamil Nadu."
-        ogTitle="About Tarcin Robotic LLP"
-        ogDescription="Meet the team behind Tarcin Robotic LLP and discover our journey of innovation in robotics, IoT, AI, and educational technology."
+        title="About Us | Tarcin LLP"
+        description="Learn about Tarcin LLP - our mission, team, history, and values driving innovation in robotics, IoT, AI, and educational technology based in Madurai, Tamil Nadu."
+        ogTitle="About Tarcin LLP"
+        ogDescription="Meet the team behind Tarcin LLP and discover our journey of innovation in robotics, IoT, AI, and educational technology."
       />
 
-<header>
- <section className="mt-20 pt-32 pb-16 md:pt-40 md:pb-24 bg-blue-900 text-white relative overflow-hidden">
-<div className="absolute inset-0 opacity-20 animate-wave">
-  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern id="wave-lines" width="100" height="40" patternUnits="userSpaceOnUse" patternTransform="translate(0, 0)">
-        <path d="M 0 20 Q 25 0, 50 20 T 100 20" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1" />
-      </pattern>
-    </defs>
-    <rect x="0" y="0" width="100%" height="100%" fill="url(#wave-lines)" />
-  </svg>
-</div>
-
-<style>
-{`
-  @keyframes waveMove {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-100px);
-    }
-  }
-
-  .animate-wave svg {
-    animation: waveMove 5s linear infinite;
-  }
-`}
-</style>
-
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <motion.h1
-              className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold mb-6"
-              initial="hidden"
-              animate="visible"
-              variants={fadeUpVariants}
-            >
-               About Our Company
-            </motion.h1>
-            <motion.p
-              className="text-base md:text-xl text-white/90 mb-8"
-              initial="hidden"
-              animate="visible"
-              variants={fadeUpVariants}
-              custom={1}
-            >
-              We're a passionate team creating innovative robotics, IoT, and educational platforms to empower the future and solve real-world problems.
-            </motion.p>
+      {/* Hero */}
+      <header>
+        <section
+          className="mt-20 pt-32 pb-16 md:pt-40 md:pb-24 text-white relative overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #2B35AE 0%, #2D3DB4 50%, #2A38C0 100%)" }}
+        >
+          <div className="absolute inset-0 opacity-15 animate-wave">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="wave-lines" width="100" height="40" patternUnits="userSpaceOnUse" patternTransform="translate(0, 0)">
+                  <path d="M 0 20 Q 25 0, 50 20 T 100 20" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1" />
+                </pattern>
+              </defs>
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#wave-lines)" />
+            </svg>
           </div>
-        </div>
-      </section>
-</header>
-      {/* Mission Section (Using OrbNarrative component) */}
-      <section className="pt-4">
-        {/* <OrbNarrative /> */}
-        <AboutSection />
-      </section>
-
-      {/* Team Section
-      <section className="py-16 md:py-24 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h2
-              className="text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white"
-              initial="hidden"
-              animate={teamVisible ? "visible" : "hidden"}
-              variants={fadeUpVariants}
-            >
-              Our Leadership Team
-            </motion.h2>
-            <motion.p
-              className="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-              initial="hidden"
-              animate={teamVisible ? "visible" : "hidden"}
-              variants={fadeUpVariants}
-              custom={1}
-            >
-              Meet the passionate experts driving innovation at Tarcin Robotic LLP.
-            </motion.p>
-          </div>
-
-          {/* <motion.div
-            ref={teamRef as React.RefObject<HTMLDivElement>}
-            variants={staggerContainerVariants}
-            initial="hidden"
-            animate={teamVisible ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10"
-          >
-            {teamMembers.map((member) => (
-              <motion.div
-                key={member.id}
-                variants={fadeUpVariants}
-                className="bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 hover:scale-105"
+          <style>{`
+            @keyframes waveMove { 0% { transform: translateX(0); } 100% { transform: translateX(-100px); } }
+            .animate-wave svg { animation: waveMove 5s linear infinite; }
+          `}</style>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <motion.h1
+                className="text-4xl md:text-6xl font-heading font-black mb-6 tracking-tight leading-tight"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
               >
-                <div className="relative h-64 w-auto overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    // width={400}
-                    // height={200}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <div className="p-4 text-white">
-                      <p className="text-sm">{member.bio}</p>
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center text-blue-300 hover:text-blue-400"
-                      >
-                        <i className="ri-linkedin-box-fill mr-1"></i> LinkedIn
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white">
-                    {member.name}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">{member.position}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div> */}
-{/* 
+                About Our Company
+              </motion.h1>
+              <motion.p
+                className="text-lg md:text-xl text-white/90 font-medium max-w-2xl mx-auto leading-relaxed mb-8"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                We're a passionate team creating innovative robotics, IoT, and educational platforms to empower the future and solve real-world problems.
+              </motion.p>
+            </div>
+          </div>
+        </section>
+      </header>
+
+      {/* About Section */}
+      <AboutSection />
+
+      {/* ── Timeline Section ── */}
+      <section className="relative py-24 md:py-36 bg-white overflow-hidden">
+        {/* Subtle ambient glow */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-blue-100/30 blur-[160px]" />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
           <motion.div
-  ref={teamRef as React.RefObject<HTMLDivElement>}
-  variants={staggerContainerVariants}
-  initial="hidden"
-  animate={teamVisible ? "visible" : "hidden"}
-  className="flex flex-wrap justify-center gap-10 max-w-5xl mx-auto"
->
-  {teamMembers.slice(0, 2).map((member) => (
-    <motion.div
-      key={member.id}
-      variants={fadeUpVariants}
-      className="w-full sm:w-[300px] bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 hover:scale-105"
-    >
-      <div className="relative h-64 w-full overflow-hidden">
-        <img
-          src={member.image}
-          alt={member.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
-          <div className="p-4 text-white">
-            <p className="text-sm">{member.bio}</p>
-            {/* <a
-              href={member.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center text-blue-300 hover:text-blue-400"
-            >
-              <i className="ri-linkedin-box-fill mr-1"></i> LinkedIn
-            </a> */}
-          {/* </div>
-        </div>
-      </div>
-      <div className="p-4">
-        <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white">
-          {member.name}
-        </h3>
-        <p className="text-gray-600 dark:text-gray-300">{member.position}</p>
-      </div>
-    </motion.div>
-  ))}
-</motion.div>
-\
-        </div>
-      </section> */} 
-
-      {/* Timeline Section */}
-      <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h2
-              className="text-xl md:text-2xl font-heading font-bold text-gray-900 dark:text-white"
-              initial="hidden"
-              animate={timelineVisible ? "visible" : "hidden"}
-              variants={fadeUpVariants}
-            >
-              Our Journey
-            </motion.h2>
-            <motion.p
-              className="mt-4 text-base text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-              initial="hidden"
-              animate={timelineVisible ? "visible" : "hidden"}
-              variants={fadeUpVariants}
-              custom={1}
-            >
-              The story of Tarcin Robotic and our path to pioneering innovative technologies.
-            </motion.p>
-          </div>
-
-          <div 
-            ref={timelineRef as React.RefObject<HTMLDivElement>}
-            className="relative max-w-4xl mx-auto"
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85 }}
           >
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200 dark:bg-gray-700"></div>
-            
-            {timelineEvents.map((event, index) => (
-              <motion.div
-                key={index}
-                initial="hidden"
-                animate={timelineVisible ? "visible" : "hidden"}
-                variants={fadeUpVariants}
-                custom={index}
-                className={`relative mb-12 md:w-1/2 ${
-                  index % 2 === 0 ? "md:ml-0 md:mr-auto md:pr-10 md:text-left"
-                  :"md:ml-auto md:pl-10 md:text-left"
-                }`}
-              >
-                <div className={`flex ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"}`}>
-                  <div className="relative bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md max-w-md">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-5 py-2 shadow-sm mb-6">
+              <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Our Story</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-black mb-4 tracking-tight">
+              Our Journey
+            </h2>
+            <p className="mt-4 text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+              The story of Tarcin and our path to pioneering innovative technologies.
+            </p>
+          </motion.div>
+
+          {/* Timeline */}
+          <div ref={timelineRef as React.RefObject<HTMLDivElement>} className="relative max-w-4xl mx-auto">
+            {/* Line draws itself from top to bottom */}
+            <motion.div
+              className="absolute left-1/2 -translate-x-1/2 top-0 w-px bg-gradient-to-b from-blue-400 via-blue-300 to-transparent"
+              initial={{ height: 0 }}
+              whileInView={{ height: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeOut" }}
+            />
+
+            {timelineEvents.map((event, index) => {
+              const isLeft = index % 2 === 0;
+              return (
+                <motion.div
+                  key={index}
+                  className={`relative mb-16 flex items-center ${isLeft ? "flex-row-reverse md:flex-row" : "flex-row-reverse"}`}
+                  initial={{ opacity: 0, x: isLeft ? -60 : 60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.8, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {/* Card */}
+                  <motion.div
+                    className={`w-full md:w-[calc(50%-2.5rem)] group relative bg-white border border-blue-50 rounded-2xl p-7 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden ${isLeft ? "md:mr-auto" : "md:ml-auto"}`}
+                    whileHover={{ y: -6, scale: 1.02 }}
+                  >
+                    {/* Hover gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+
                     {/* Year badge */}
-                    <div className="absolute top-0 bg-blue-600 text-white py-1 px-3 rounded-full font-semibold text-sm transform -translate-y-1/2">
+                    <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold border border-blue-100 uppercase tracking-[0.2em]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                       {event.year}
                     </div>
-                    
-                    <h3 className="text-base font-heading font-semibold text-gray-900 dark:text-white mt-4">
+
+                    <h3 className="text-xl md:text-2xl font-heading font-black text-black mb-3 group-hover:text-blue-700 transition-colors tracking-tight">
                       {event.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mt-2">
+                    <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed group-hover:text-slate-700 transition-colors">
                       {event.description}
                     </p>
-                  </div>
-                </div>
-                
-                {/* Timeline dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800"></div>
-              </motion.div>
-            ))}
+                  </motion.div>
+
+                  {/* Center dot with sonar pulse */}
+                  <motion.div
+                    className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.12 + 0.3, type: "spring", stiffness: 200 }}
+                  >
+                    <div className="w-4 h-4 rounded-full bg-blue-600 border-2 border-white shadow-[0_0_10px_3px_rgba(59,130,246,0.35)] z-10" />
+                    <motion.div
+                      className="absolute w-8 h-8 rounded-full border border-blue-300"
+                      animate={{ scale: [1, 1.7, 1], opacity: [0.5, 0, 0.5] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: index * 0.3 }}
+                    />
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h2
-              className="text-xl md:text-2xl font-heading font-bold text-gray-900 dark:text-white"
-              initial="hidden"
-              animate={valuesVisible ? "visible" : "hidden"}
-              variants={fadeUpVariants}
-            >
-              Our Core Values
-            </motion.h2>
-            <motion.p
-              className="mt-4 text-base text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-              initial="hidden"
-              animate={valuesVisible ? "visible" : "hidden"}
-              variants={fadeUpVariants}
-              custom={1}
-            >
-              The guiding principles that drive our work and shape our culture.
-            </motion.p>
-          </div>
-
+      {/* ── Core Values Section ── */}
+      <section className="relative py-24 md:py-32 bg-slate-50 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <motion.div
-            ref={valuesRef as React.RefObject<HTMLDivElement>}
-            variants={staggerContainerVariants}
-            initial="hidden"
-            animate={valuesVisible ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            className="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] rounded-full bg-blue-200/30 blur-[120px]"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.6, 0.4] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[-100px] right-[-100px] w-[450px] h-[450px] rounded-full bg-indigo-200/25 blur-[110px]"
+            animate={{ scale: [1.1, 1, 1.1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: "easeOut" }}
           >
-            {values.map((value, index) => (
-              <motion.div
-                key={index}
-                variants={fadeUpVariants}
-                custom={index}
-                className="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300 group"
-              >
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <i className={`${value.icon} text-3xl`}></i>
-                  </div>
-                  <h3 className="text-base font-heading font-semibold text-gray-900 dark:text-white mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-justify text-gray-600 dark:text-gray-300">
-                    {value.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-5 py-2 shadow-sm mb-6">
+              <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Our Philosophy</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-black mb-5 tracking-tight">
+              Our Core Values
+            </h2>
+            <p className="mt-4 text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+              The guiding principles that drive our work and shape our culture.
+            </p>
           </motion.div>
+
+          <div
+            ref={valuesRef as React.RefObject<HTMLDivElement>}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {values.map((value, index) => {
+              const gradients = [
+                { from: "from-blue-500", to: "to-cyan-400", glow: "rgba(59,130,246,0.3)", iconBg: "bg-blue-50", iconText: "text-blue-600", num: "#3B82F6" },
+                { from: "from-indigo-500", to: "to-purple-400", glow: "rgba(99,102,241,0.3)", iconBg: "bg-indigo-50", iconText: "text-indigo-600", num: "#6366F1" },
+                { from: "from-sky-500", to: "to-blue-400", glow: "rgba(14,165,233,0.3)", iconBg: "bg-sky-50", iconText: "text-sky-600", num: "#0EA5E9" },
+                { from: "from-violet-500", to: "to-indigo-400", glow: "rgba(139,92,246,0.3)", iconBg: "bg-violet-50", iconText: "text-violet-600", num: "#8B5CF6" },
+              ];
+              const g = gradients[index % 4];
+              const nums = ["01", "02", "03", "04"];
+
+              return (
+                <motion.div
+                  key={index}
+                  className="group relative flex flex-col items-center text-center rounded-3xl bg-white border border-blue-50 p-8 shadow-sm overflow-hidden cursor-pointer"
+                  initial={{ opacity: 0, y: 40, rotateX: -20 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.8, delay: index * 0.14, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -12, scale: 1.03, transition: { duration: 0.3 } }}
+                >
+                  {/* Shimmer sweep */}
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                  </div>
+
+                  {/* Top bar */}
+                  <motion.div
+                    className={`absolute top-0 left-0 h-1.5 bg-gradient-to-r ${g.from} ${g.to} rounded-t-3xl`}
+                    initial={{ width: "0%" }}
+                    whileInView={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.1, delay: 0.4 + index * 0.14, ease: "easeOut" }}
+                  />
+
+                  {/* Faded number */}
+                  <div className="absolute top-4 right-5 text-4xl font-black leading-none select-none" style={{ color: g.num, opacity: 0.08 }}>
+                    {nums[index]}
+                  </div>
+
+                  {/* Icon */}
+                  <motion.div
+                    className={`relative mb-6 flex h-20 w-20 items-center justify-center rounded-2xl ${g.iconBg} ${g.iconText} shadow-sm`}
+                    whileHover={{ rotate: 10, scale: 1.15 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <i className={`${value.icon} text-3xl`}></i>
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{ boxShadow: `0 0 0 0px ${g.glow}` }}
+                      animate={{ boxShadow: [`0 0 0 0px ${g.glow}`, `0 0 0 10px transparent`] }}
+                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+                    />
+                  </motion.div>
+
+                  <h3 className="text-xl md:text-2xl font-heading font-black text-black mb-4 tracking-tight">{value.title}</h3>
+                  <p className="text-sm md:text-base font-medium leading-relaxed text-slate-500 group-hover:text-slate-700 transition-colors">{value.description}</p>
+
+                  <div
+                    className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 rounded-full blur-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(to right, ${g.glow}, transparent, ${g.glow})` }}
+                  />
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Gallery Intro Section */}
-      <GalleryIntro />
-
-      {/* Stats (Reusing the stats component) */}
+      <div className="bg-slate-50">
+        <GalleryIntro />
+      </div>
       <Stats />
-
-      {/* Testimonials (Reusing the testimonials component) */}
       <Testimonials />
-
-      {/* Newsletter (Reusing the newsletter component) */}
       <Newsletter />
-
-      
     </>
   );
 };

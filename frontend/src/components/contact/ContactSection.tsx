@@ -187,7 +187,7 @@ const activeLocation = locations.find((l) => l.id === selectedTab);
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.h2
-            className="text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white"
+            className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-black dark:text-white tracking-tight"
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             variants={fadeUpVariants}
@@ -216,7 +216,7 @@ const activeLocation = locations.find((l) => l.id === selectedTab);
             animate={isVisible ? "visible" : "hidden"}
             className="bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md p-6 md:p-8"
           >
-            <h3 className="text-2xl font-heading font-semibold text-gray-900 dark:text-white mb-6">Send us a Message</h3>
+            <h3 className="text-2xl font-heading font-black text-black dark:text-white mb-6">Send us a Message</h3>
             
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -395,7 +395,7 @@ const activeLocation = locations.find((l) => l.id === selectedTab);
             
             {/* Contact Information */}
             <address className="bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md p-6 md:p-8 not-italic">
-              <h3 className="text-2xl font-heading font-semibold text-gray-900 dark:text-white mb-6">Contact Information</h3>
+              <h3 className="text-2xl font-heading font-black text-black dark:text-white mb-6">Contact Information</h3>
               
               <div className="space-y-6">
                 <div className="flex items-start">

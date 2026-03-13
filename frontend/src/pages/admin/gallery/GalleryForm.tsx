@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Dialog,
@@ -23,14 +24,7 @@ import * as z from "zod";
 import { useToast } from "../../../hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../../lib/queryClient";
-
-import Cropper from "react-easy-crop";
-import { Slider } from "../../../components/ui/slider"; // use any slider component you have
-import { Dialog as CropDialog, DialogContent as CropContent } from "../../../components/ui/dialog";
-import getCroppedImg from "../../../lib/cropImage"; // we'll add this helper
-
-
-
+import { X, Upload, Image as ImageIcon } from "lucide-react";
 
 interface GalleryPost {
   _id?: string;
@@ -55,6 +49,12 @@ const formSchema = z.object({
   images: z.any().optional(),
 });
 
+const getImageUrl = (path: string) => {
+  if (!path) return "";
+  if (path.startsWith("http")) return path;
+  return path.startsWith("/") ? path : `/${path}`;
+};
+
 export default function GalleryForm({
   gallery,
   isOpen,
@@ -63,25 +63,46 @@ export default function GalleryForm({
   const { toast } = useToast();
   const isEditing = !!gallery?._id;
 
-const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
-const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-const [zoom, setZoom] = React.useState(1);
-const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
-const [showCropper, setShowCropper] = React.useState(false);
-
+  const [existingImages, setExistingImages] = React.useState<string[]>([]);
+  const [newImagePreviews, setNewImagePreviews] = React.useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: gallery?.title || "",
-      description: gallery?.description || "",
-      category: gallery?.category || "other",
-      date: gallery?.date ? gallery.date.split("T")[0] : "",
+      title: "",
+      description: "",
+      category: "other",
+      date: "",
       images: [],
     },
   });
 
-  // ✅ React Query Mutation for Create / Update
+  // Sync state when gallery prop changes
+  React.useEffect(() => {
+    if (gallery && isOpen) {
+      setExistingImages(gallery.images || []);
+      form.reset({
+        title: gallery.title || "",
+        description: gallery.description || "",
+        category: gallery.category || "other",
+        date: gallery.date ? gallery.date.split("T")[0] : "",
+        images: [],
+      });
+    } else if (isOpen) {
+      setExistingImages([]);
+      form.reset({
+        title: "",
+        description: "",
+        category: "other",
+        date: "",
+        images: [],
+      });
+    }
+    setNewImagePreviews([]);
+    setSelectedFiles([]);
+  }, [gallery, isOpen, form]);
+
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
       const id = gallery?._id;
@@ -93,223 +114,196 @@ const [showCropper, setShowCropper] = React.useState(false);
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Failed to save gallery");
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to save gallery");
+      }
       return res.json();
     },
     onSuccess: () => {
       toast({
         title: "Success",
-        description: isEditing
-          ? "Gallery updated successfully."
-          : "Gallery created successfully.",
+        description: isEditing ? "Album updated successfully" : "Album created successfully",
       });
+      queryClient.invalidateQueries(["gallery-all"]); // Updated to match key in GallerySection
       queryClient.invalidateQueries(["/api/gallery"]);
       onClose();
     },
     onError: (err: any) => {
-      toast({
-        title: "Error",
-        description: err.message,
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     },
   });
 
-  // ✅ Handle Form Submission
-  const onSubmit = (values: any) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    setSelectedFiles((prev) => [...prev, ...files]);
+
+    const previews = files.map((f) => URL.createObjectURL(f));
+    setNewImagePreviews((prev) => [...prev, ...previews]);
+  };
+
+  const removeNewImage = (index: number) => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    setNewImagePreviews((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeExistingImage = (path: string) => {
+    setExistingImages((prev) => prev.filter((p) => p !== path));
+  };
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     const fd = new FormData();
     fd.append("title", values.title);
     if (values.description) fd.append("description", values.description);
     if (values.category) fd.append("category", values.category);
     if (values.date) fd.append("date", values.date);
 
-    // ✅ If editing, attach the existing ID
-    if (gallery?._id) fd.append("_id", gallery._id);
+    // Backend updateGallery expects 'existingImages' array for those we keep
+    if (isEditing) {
+      existingImages.forEach((img) => fd.append("existingImages", img));
+    }
 
-    if (values.images?.length)
-      Array.from(values.images).forEach((f: any) => fd.append("images", f));
+    // New files
+    selectedFiles.forEach((file) => fd.append("images", file));
 
     mutation.mutate(fd);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Gallery" : "Create Gallery"}</DialogTitle>
+          <DialogTitle>{isEditing ? "Edit Gallery Album" : "Create New Album"}</DialogTitle>
           <DialogDescription>
-            Fill in details to {isEditing ? "update" : "create"} a gallery post.
+            {isEditing ? "Update album details and manage photos." : "Upload multiple photos to create a new gallery album."}
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter gallery title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Album Title</FormLabel>
+                      <FormControl><Input placeholder="Science Fair 2024" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Enter description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-blue-600 font-bold">Album Story (Description)</FormLabel>
+                      <FormControl><Textarea placeholder="Share the beautiful story behind these moments..." className="h-32 text-base leading-relaxed" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <select {...field} className="w-full border p-2 rounded bg-white">
-                      <option value="office">Office</option>
-                      <option value="school">School</option>
-                      <option value="college">College</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <select {...field} className="w-full h-10 border rounded-md px-3 text-sm bg-white">
+                            <option value="office">Office</option>
+                            <option value="school">School</option>
+                            <option value="college">College</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Date</FormLabel>
+                        <FormControl><Input type="date" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
 
-            {/* <FormField
-              control={form.control}
-              name="images"
-              render={() => (
-                <FormItem>
-                  <FormLabel>Images</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={(e) =>
-                        form.setValue("images", e.target.files as any)
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+              <div className="space-y-4">
+                <FormLabel>Album Photos</FormLabel>
+                <div className="border-2 border-dashed rounded-xl p-4 text-center bg-gray-50/50 hover:bg-gray-100/50 transition-colors relative cursor-pointer group">
+                  <input
+                    id="album-photos-upload"
+                    name="images-upload"
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                  />
+                  <div className="flex flex-col items-center">
+                    <Upload className="w-8 h-8 text-slate-400 group-hover:text-blue-500 transition-colors mb-2" />
+                    <p className="text-sm font-semibold text-slate-600">Click or drag to upload photos</p>
+                    <p className="text-xs text-slate-400 mt-1">Multiple files supported</p>
+                  </div>
+                </div>
 
-            <FormField
-  control={form.control}
-  name="images"
-  render={() => (
-    <FormItem>
-      <FormLabel>Images</FormLabel>
-      <FormControl>
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = () => {
-                setSelectedImage(reader.result as string);
-                setShowCropper(true);
-              };
-              reader.readAsDataURL(file);
-            }
-          }}
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+                {/* Previews */}
+                <div className="grid grid-cols-3 gap-2 mt-4 max-h-[200px] overflow-y-auto pr-1">
+                  {/* Existing */}
+                  {existingImages.map((img) => (
+                    <div key={img} className="relative aspect-square rounded-lg overflow-hidden border bg-white group">
+                      <img src={getImageUrl(img)} className="w-full h-full object-cover" alt="existing" />
+                      <button
+                        type="button"
+                        onClick={() => removeExistingImage(img)}
+                        className="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                  {/* New */}
+                  {newImagePreviews.map((url, i) => (
+                    <div key={i} className="relative aspect-square rounded-lg overflow-hidden border bg-blue-50 group">
+                      <img src={url} className="w-full h-full object-cover" alt="new" />
+                      <button
+                        type="button"
+                        onClick={() => removeNewImage(i)}
+                        className="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                  {existingImages.length === 0 && selectedFiles.length === 0 && (
+                    <div className="col-span-3 flex flex-col items-center justify-center py-6 text-slate-300 border border-dashed rounded-lg">
+                      <ImageIcon className="w-8 h-8 mb-1" />
+                      <span className="text-[10px] uppercase font-bold tracking-wider">No photos selected</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
-{/* Crop Dialog */}
-<CropDialog open={showCropper} onOpenChange={setShowCropper}>
-  <CropContent className="sm:max-w-[600px]">
-    <div className="relative w-full h-[400px] bg-gray-900">
-      {selectedImage && (
-        <Cropper
-          image={selectedImage}
-          crop={crop}
-          zoom={zoom}
-          aspect={16 / 9}
-          onCropChange={setCrop}
-          onZoomChange={setZoom}
-          onCropComplete={(_, croppedArea) =>
-            setCroppedAreaPixels(croppedArea)
-          }
-        />
-      )}
-    </div>
-    <div className="p-4 flex flex-col gap-3">
-      <Slider
-        min={1}
-        max={3}
-        step={0.1}
-        value={[zoom]}
-        onValueChange={(val) => setZoom(val[0])}
-      />
-      <div className="flex justify-end gap-2">
-        <Button variant="outline" onClick={() => setShowCropper(false)}>
-          Cancel
-        </Button>
-        <Button
-          onClick={async () => {
-            if (!selectedImage || !croppedAreaPixels) return;
-            const croppedFile = await getCroppedImg(selectedImage, croppedAreaPixels);
-            form.setValue("images", [croppedFile]);
-            setShowCropper(false);
-          }}
-        >
-          Crop & Save
-        </Button>
-      </div>
-    </div>
-  </CropContent>
-</CropDialog>
-
-
-            <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={mutation.isPending}>
-                {mutation.isPending
-                  ? "Saving..."
-                  : isEditing
-                  ? "Update"
-                  : "Create"}
+            <div className="flex justify-end gap-3 pt-4 border-t">
+              <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+              <Button type="submit" disabled={mutation.isPending} className="bg-blue-600 hover:bg-blue-700 w-32">
+                {mutation.isPending ? "Saving..." : isEditing ? "Update Album" : "Create Album"}
               </Button>
             </div>
           </form>

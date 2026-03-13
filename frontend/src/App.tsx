@@ -2,7 +2,7 @@ import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 // import { Toaster } from "../components/ui/toaster";
-import {Toaster} from "./components/ui/toaster";
+import { Toaster } from "./components/ui/toaster";
 import { TooltipProvider } from "./components/ui/tooltip";
 import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
@@ -58,14 +58,14 @@ import GalleryManagement from "./pages/admin/gallery";
 function Router() {
   const [location] = useLocation();
   const isAdminRoute = location.startsWith('/admin');
-  
+
   return (
     <Switch>
       {/* Public Routes */}
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/services" component={Services} />
-      <Route path="/service-section" component={ServicesSection } />
+      <Route path="/service-section" component={ServicesSection} />
       <Route path="/products" component={Products} />
       <Route path="/products/:id" component={ProductDetail} />
       <Route path="/courses" component={Courses} />
@@ -80,27 +80,27 @@ function Router() {
       <Route path="/newsletter/manage" component={NewsletterManage} />
       <Route path="/certificate-validation" component={CertificateValidation} />
 
- 
+
       <Route path="/gallery" component={GallerySection} />
       {/* <Route path="/admin/gallery" component={AdminGalleryList} /> */}
-       {/* <Route path="/admin/gallery" component={gallery} />
+      {/* <Route path="/admin/gallery" component={gallery} />
       <Route path="/admin/gallery/new" component={GalleryForm} />
       <Route path="/admin/gallery/edit/:id" component={EditGallery} />. */}
-    
 
 
-      <Route path="/privacy-policy" component = {PrivacyPolicy} />
-      <Route path="/terms-of-service" component = {TermsOfService} />
-      <Route path="/cookie-policy" component = {CookiePolicy} />
+
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/terms-of-service" component={TermsOfService} />
+      <Route path="/cookie-policy" component={CookiePolicy} />
 
       {/* Admin Routes */}
       <Route path="/admin/login" component={AdminLogin} />
       <ProtectedRoute path="/admin/dashboard">
         <AdminDashboard />
       </ProtectedRoute>
-     <ProtectedRoute path="/admin/courses">
-  <AdminCourses /> {/* ✅ Not <Courses /> */}
-</ProtectedRoute>
+      <ProtectedRoute path="/admin/courses">
+        <AdminCourses /> {/* ✅ Not <Courses /> */}
+      </ProtectedRoute>
       <ProtectedRoute path="/admin/blog">
         <BlogManagement />
       </ProtectedRoute>
@@ -114,8 +114,8 @@ function Router() {
         <CommunityManagement />
       </ProtectedRoute>
       <ProtectedRoute path="/admin/newsletter-subscribers">
-  <NewsletterSubscribers />
-</ProtectedRoute>
+        <NewsletterSubscribers />
+      </ProtectedRoute>
       <ProtectedRoute path="/admin/settings">
         <AdminSettings />
       </ProtectedRoute>
@@ -130,7 +130,7 @@ function Router() {
         window.location.href = "/admin/login";
         return null;
       }} />
-      
+
       {/* 404 Route */}
       <Route component={NotFound} />
     </Switch>
@@ -140,7 +140,7 @@ function Router() {
 function App() {
   const [location] = useLocation();
   const isAdminRoute = location.startsWith('/admin');
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -154,9 +154,9 @@ function App() {
             <div className="flex flex-col min-h-screen bg-white">
               <SimpleNavbar />
               {/* <Navbar /> */}
-              
+
               <main className="flex-grow">
-                 <ScrollToTop /> 
+                <ScrollToTop />
                 <Router />
               </main>
               <Footer />

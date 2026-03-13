@@ -11,21 +11,23 @@ import Newsletter from "../components/home/Newsletter";
 import ServicesSection from "../components/services/ServicesSection";
 import ProductsSection from "../components/products/ProductsSection";
 import EventsSection from "../components/events/EventsSection";
-import CompanyMission from "../components/home/CompanyMission";
+import VisionMission from "../components/home/VisionMission";
+import MissionHighlights from "../components/home/MissionHighlights";
 
 const Home: React.FC = () => {
   return (
     <>
       <DocumentHead
-        title="Tarcin Robotic LLP - Deep-Tech Solutions from Madurai, Tamil Nadu"
-        description="Tarcin Robotic LLP is a deep-tech startup delivering scalable solutions across robotics, IoT, AI, observability, custom software development, and educational technology."
-        ogTitle="Tarcin Robotic LLP - Execution-Driven Innovation"
+        title="Tarcin LLP - Deep-Tech Solutions from Madurai, Tamil Nadu"
+        description="Tarcin LLP is a deep-tech startup delivering scalable solutions across robotics, IoT, AI, observability, custom software development, and educational technology."
+        ogTitle="Tarcin LLP - Execution-Driven Innovation"
         ogDescription="Building innovative technology solutions from Madurai, Tamil Nadu across robotics, IoT, AI, custom software, and educational products. Grounded in execution and regional impact."
       />
-      
+
       <Hero />
       <OrbNarrative />
-      <CompanyMission />
+      <VisionMission />
+      <MissionHighlights />
       <Features />
       <Partners />
       <Stats />

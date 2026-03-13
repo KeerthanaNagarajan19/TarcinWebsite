@@ -54,15 +54,15 @@ export function DataTable({
 
   const formatCellValue = (item: any, column: DataColumn) => {
     const value = item[column.key];
-    
+
     if (column.formatFn) {
       return column.formatFn(value);
     }
-    
+
     if (value === undefined || value === null) {
       return "-";
     }
-    
+
     switch (column.type) {
       case "date":
         try {
@@ -94,9 +94,10 @@ export function DataTable({
         }
         return value;
       case "longText":
+        const plainText = typeof value === "string" ? value.replace(/<[^>]*>/g, "") : value;
         return (
-          <div className="max-w-xs truncate" title={value}>
-            {value}
+          <div className="max-w-xs truncate" title={plainText}>
+            {plainText}
           </div>
         );
       default:
@@ -115,7 +116,7 @@ export function DataTable({
     }
   };
 
-  
+
 
   if (isLoading) {
     return (
@@ -213,7 +214,7 @@ export function DataTable({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
-              <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
           </DialogHeader>
           {/* <p>Are you sure you want to delete this item? This action cannot be undone.</p> */}
           <DialogFooter>

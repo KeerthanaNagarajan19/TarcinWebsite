@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
-import  { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import * as z from "zod";
 import {
@@ -31,14 +31,14 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 const AdminLogin: React.FC = () => {
   const [, navigate] = useLocation();
   const { login, isAuthenticated, isLoading } = useAdminAuth();
-  
+
   // Redirect if already logged in
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/admin/dashboard");
     }
   }, [isAuthenticated, navigate]);
-  
+
   // Form setup
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -47,7 +47,7 @@ const AdminLogin: React.FC = () => {
       password: "",
     },
   });
-  
+
   // Form submission handler
   const onSubmit = async (values: LoginFormValues) => {
     const success = await login(values.username, values.password);
@@ -55,14 +55,14 @@ const AdminLogin: React.FC = () => {
       navigate("/admin/dashboard");
     }
   };
-  
+
   return (
     <>
       <DocumentHead
         title="Tarcin Robotic - Admin Login"
         description="Secure login for Tarcin Robotic content management system."
       />
-      
+
       <div className="min-h-screen py-16 flex items-center justify-center bg-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-md">
           <Card className="border-blue-100 shadow-lg">
@@ -72,9 +72,9 @@ const AdminLogin: React.FC = () => {
                 Sign in to access the content management system
               </CardDescription>
             </CardHeader>
-            
+
             <Separator className="mx-4" />
-            
+
             <CardContent className="pt-6">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -87,14 +87,14 @@ const AdminLogin: React.FC = () => {
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                            <Input placeholder="Enter your username" className="pl-10" {...field} />
+                            <Input placeholder="Enter your username" className="pl-10" autoComplete="username" {...field} />
                           </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="password"
@@ -104,11 +104,12 @@ const AdminLogin: React.FC = () => {
                         <FormControl>
                           <div className="relative">
                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                            <Input 
-                              type="password" 
-                              placeholder="Enter your password" 
-                              className="pl-10" 
-                              {...field} 
+                            <Input
+                              type="password"
+                              placeholder="Enter your password"
+                              className="pl-10"
+                              autoComplete="current-password"
+                              {...field}
                             />
                           </div>
                         </FormControl>
@@ -116,9 +117,9 @@ const AdminLogin: React.FC = () => {
                       </FormItem>
                     )}
                   />
-                  
-                  <Button 
-                    type="submit" 
+
+                  <Button
+                    type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700"
                     disabled={isLoading}
                   >
@@ -127,7 +128,7 @@ const AdminLogin: React.FC = () => {
                 </form>
               </Form>
             </CardContent>
-            
+
             <CardFooter>
               <p className="text-xs text-center text-gray-500 w-full">
                 This area is for authorized personnel only. Unauthorized access is strictly prohibited.

@@ -11,7 +11,7 @@ import courseRoutes from "./routes/coursesRoute";
 import newsletterRoutes from "./routes/newsletterRoutes";
 import pdfProxy from './routes/pdfProxy'; // Proxy for PDF handling
 import path from "path";
-import zohoAuthRoutes from "./routes/zohoAuth"; 
+import zohoAuthRoutes from "./routes/zohoAuth";
 import diagnosticsRoutes from "./routes/diagnostics";
 import newsletterDebugRoutes from "./routes/newsletterDebug";
 import certificateRoutes from "./routes/certificateRoutes"; // <-- use the file above
@@ -19,13 +19,16 @@ import galleryRoutes from "./routes/galleryRoutes";
 
 import bodyParser from "body-parser";
 
-
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000','https://tarcin.in','https://certificate.tarcin.in'],
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://tarcin.in', 'https://certificate.tarcin.in'],
   credentials: true,
 }));
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Tarcin Backend!");
+});
 
 app.use(express.json());
 
@@ -61,7 +64,7 @@ app.use("/api/gallery", galleryRoutes);
 
 app.use(zohoAuthRoutes); // mounts /auth/zoho and /auth/zoho/callback
 app.use(diagnosticsRoutes);
-app.use(newsletterDebugRoutes);   
+app.use(newsletterDebugRoutes);
 
 console.log("✅ All routes mounted");
 

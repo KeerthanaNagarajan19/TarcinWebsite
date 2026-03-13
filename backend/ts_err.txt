@@ -1,0 +1,5 @@
+src/controllers/blogController.ts(12,7): error TS2717: Subsequent property declarations must have the same type.  Property 'file' must be of type 'File | undefined', but here has type 'any'.
+src/controllers/blogController.ts(13,7): error TS2717: Subsequent property declarations must have the same type.  Property 'files' must be of type '{ [fieldname: string]: File[]; } | File[] | undefined', but here has type 'any'.
+src/controllers/certificateController.ts(13,28): error TS2552: Cannot find name 'pool'. Did you mean 'Pool'?
+src/index.ts(29,6): error TS2304: Cannot find name 'dayMs'.
+src/utils/newsletter.ts(100,61): error TS2339: Property 'response' does not exist on type '{}'.

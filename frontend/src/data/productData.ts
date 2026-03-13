@@ -21,7 +21,7 @@ export const productsData: Record<string, any> = {
     image: spouted,
     category: "Educational",
     tier: "Standard",
-    price: "Starting at ₹1,50,000 per year",
+    price: "Contact for pricing",
     features: [
       "Intuitive course creation tools",
       "Student progress tracking",
@@ -80,74 +80,74 @@ export const productsData: Record<string, any> = {
     ]
   },
   "tarcin-crm": {
-  id: "tarcin-crm",
-  title: "CHARGE – Institutional CRM Redefined",
-  description: "Integrated ERP/CRM for education, designed to streamline operations from admissions to alumni engagement with secure, customizable modules.",
-  fullDescription: `<p>CHARGE is an integrated CRM platform purpose-built for educational institutions, training centers, and organizations to manage their operations efficiently-from admissions to alumni engagement.</p> 
+    id: "tarcin-crm",
+    title: "CHARGE – Institutional CRM Redefined",
+    description: "Integrated ERP/CRM for education, designed to streamline operations from admissions to alumni engagement with secure, customizable modules.",
+    fullDescription: `<p>CHARGE is an integrated CRM platform purpose-built for educational institutions, training centers, and organizations to manage their operations efficiently-from admissions to alumni engagement.</p> 
   <p>Designed with flexibility and scalability in mind, CHARGE simplifies complex administrative workflows and ensures every touchpoint of the student and institutional journey is organized, optimized, and outcome-driven.</p>
   <p>With powerful customization options, CHARGE adapts seamlessly to the unique needs of schools, colleges, preschools, training centers, and corporate learning divisions.</p>`,
-  image: charge,
-  category: "Software",
-  tier: "Enterprise",
-  price: "Starting at ₹4,00,000 per year",
-  features: [
-    "Student Lifecycle Management",
-    "Customizable Workflows",
-    "Centralized Communication",
-    "Real-Time Dashboards & Reports",
-    "Secure Cloud Access",
-    "Career Planning Integration",
-    "Multi-Institution Management"
-  ],
-  technicalSpecs: {
-    deployment: "Cloud-based | On-Premise (upon request)",
-    security: "Role-based access control, SSL encryption, daily backups",
-    integration: "Email, SMS, WhatsApp, Payment Gateway, LMS",
-    customization: "Fully modular and customizable",
-    localization: "Multi-language support and responsive design",
-    support: "Onboarding assistance, training modules, and dedicated support"
+    image: charge,
+    category: "Software",
+    tier: "Enterprise",
+    price: "Contact for pricing",
+    features: [
+      "Student Lifecycle Management",
+      "Customizable Workflows",
+      "Centralized Communication",
+      "Real-Time Dashboards & Reports",
+      "Secure Cloud Access",
+      "Career Planning Integration",
+      "Multi-Institution Management"
+    ],
+    technicalSpecs: {
+      deployment: "Cloud-based | On-Premise (upon request)",
+      security: "Role-based access control, SSL encryption, daily backups",
+      integration: "Email, SMS, WhatsApp, Payment Gateway, LMS",
+      customization: "Fully modular and customizable",
+      localization: "Multi-language support and responsive design",
+      support: "Onboarding assistance, training modules, and dedicated support"
+    },
+    caseStudies: [
+      {
+        title: "Buzzing Bees Preschool",
+        description: "CHARGE was implemented with customized modules to manage preschool-specific workflows. Resulted in 60% reduction in manual work and improved parent satisfaction.",
+        industry: "Preschool Education"
+      }
+    ],
+    testimonials: [
+      {
+        quote: "CHARGE has helped us bring structure to our operations. It’s easy to use and completely tailored to our needs.",
+        author: "Administrator",
+        position: "Buzzing Bees Preschool"
+      }
+    ],
+    faqs: [
+      {
+        question: "Who can use CHARGE?",
+        answer: "CHARGE is designed for preschools, K-12 schools, colleges, coaching centers, training institutions, and corporate learning departments."
+      },
+      {
+        question: "Can CHARGE be customized for our institution's unique processes?",
+        answer: "Yes, CHARGE is fully modular and can be tailored to suit your workflows, terminology, and functional needs."
+      },
+      {
+        question: "Is CHARGE secure?",
+        answer: "Absolutely. We implement advanced encryption protocols, secure logins, and regular backups to ensure data integrity and privacy."
+      },
+      {
+        question: "How long does implementation take?",
+        answer: "Implementation time varies based on customization requirements, but a standard setup can be completed in 1–2 weeks."
+      },
+      {
+        question: "Does CHARGE offer support and training?",
+        answer: "Yes, we provide complete onboarding, training sessions for users, and continuous technical support through email, chat, and call."
+      },
+      {
+        question: "Can I manage multiple branches or institutions?",
+        answer: "Yes, CHARGE supports multi-institution management from a single dashboard."
+      }
+    ]
   },
-  caseStudies: [
-    {
-      title: "Buzzing Bees Preschool",
-      description: "CHARGE was implemented with customized modules to manage preschool-specific workflows. Resulted in 60% reduction in manual work and improved parent satisfaction.",
-      industry: "Preschool Education"
-    }
-  ],
-  testimonials: [
-    {
-      quote: "CHARGE has helped us bring structure to our operations. It’s easy to use and completely tailored to our needs.",
-      author: "Administrator",
-      position: "Buzzing Bees Preschool"
-    }
-  ],
-  faqs: [
-    {
-      question: "Who can use CHARGE?",
-      answer: "CHARGE is designed for preschools, K-12 schools, colleges, coaching centers, training institutions, and corporate learning departments."
-    },
-    {
-      question: "Can CHARGE be customized for our institution's unique processes?",
-      answer: "Yes, CHARGE is fully modular and can be tailored to suit your workflows, terminology, and functional needs."
-    },
-    {
-      question: "Is CHARGE secure?",
-      answer: "Absolutely. We implement advanced encryption protocols, secure logins, and regular backups to ensure data integrity and privacy."
-    },
-    {
-      question: "How long does implementation take?",
-      answer: "Implementation time varies based on customization requirements, but a standard setup can be completed in 1–2 weeks."
-    },
-    {
-      question: "Does CHARGE offer support and training?",
-      answer: "Yes, we provide complete onboarding, training sessions for users, and continuous technical support through email, chat, and call."
-    },
-    {
-      question: "Can I manage multiple branches or institutions?",
-      answer: "Yes, CHARGE supports multi-institution management from a single dashboard."
-    }
-  ]
-},
 
   "smart-home-kit": {
     id: "smart-home-kit",
@@ -157,7 +157,7 @@ export const productsData: Record<string, any> = {
     image: home,
     category: "IoT Devices",
     tier: "Standard",
-    price: "Starting at ₹50,000",
+    price: "Contact for pricing",
     features: [
       "Universal Device Integration",
       "Voice-Activated Automation",
@@ -225,41 +225,41 @@ export const productsData: Record<string, any> = {
     ]
   },
   "stem-kits": {
-  id: "stem-kits",
-  title: "Velammal STEM Curriculum – Tarcin Robotic LLP",
-  description: "Hands-on STEM program with progressive kits and AI/IoT integration for Grades 3–9, empowering future-ready students.",
-  fullDescription: `<p>The curriculum proposed by Tarcin Robotic LLP is a hands-on, progressive STEM learning program tailored for Velammal Group of Schools, spanning Grades 3 to 9. It integrates Robotics, Python Programming, IoT, Web Development, and AI/ML, empowering students with industry-relevant skills in automation, coding, and electronics.</p>`,
-  image: book,
-  category: "Educational",
-  tier: "Standard",
-  price: "Starting at ₹3,500 per kit",
-  features: [
-    "Project-based learning for each grade",
-    "Progressive difficulty from basic mechanisms to AI & IoT",
-    "Python introduced in Grade 3 and advanced by Grade 9",
-    "Integration of electronics, programming, automation, and health safety systems",
-    "Emphasis on creativity, problem-solving, and real-world impact"
-  ],
-  technicalSpecs: {
-    kitsAndBuilds: "Grades 3 to 9: From basic mechanical kits and block-based coding to smart automation, wireless robotics, IoT, and AI-enabled full-stack development, each kit progressively builds real-world tech skills year by year.",
-    curriculum: "Grade 3 to 9: Basics to AI - simple circuits & Turtle → block coding & sensors → functions & IoT → wireless & Bluetooth → embedded systems → smart home & fire detection → full-stack web & AI.",
-    components: "Sensors, actuators, microcontrollers, comm modules, and parts; projects: smart trash can & AI book recommender."
+    id: "stem-kits",
+    title: "Velammal STEM Curriculum – Tarcin Robotic LLP",
+    description: "Hands-on STEM program with progressive kits and AI/IoT integration for Grades 3–9, empowering future-ready students.",
+    fullDescription: `<p>The curriculum proposed by Tarcin Robotic LLP is a hands-on, progressive STEM learning program tailored for Velammal Group of Schools, spanning Grades 3 to 9. It integrates Robotics, Python Programming, IoT, Web Development, and AI/ML, empowering students with industry-relevant skills in automation, coding, and electronics.</p>`,
+    image: book,
+    category: "Educational",
+    tier: "Standard",
+    price: "Contact for pricing",
+    features: [
+      "Project-based learning for each grade",
+      "Progressive difficulty from basic mechanisms to AI & IoT",
+      "Python introduced in Grade 3 and advanced by Grade 9",
+      "Integration of electronics, programming, automation, and health safety systems",
+      "Emphasis on creativity, problem-solving, and real-world impact"
+    ],
+    technicalSpecs: {
+      kitsAndBuilds: "Grades 3 to 9: From basic mechanical kits and block-based coding to smart automation, wireless robotics, IoT, and AI-enabled full-stack development, each kit progressively builds real-world tech skills year by year.",
+      curriculum: "Grade 3 to 9: Basics to AI - simple circuits & Turtle → block coding & sensors → functions & IoT → wireless & Bluetooth → embedded systems → smart home & fire detection → full-stack web & AI.",
+      components: "Sensors, actuators, microcontrollers, comm modules, and parts; projects: smart trash can & AI book recommender."
 
-  },
-  caseStudies: [
-    {
-      title: "Smart Trash Can",
-      description: "Students built a motion-activated smart trash can using ultrasonic sensors and microcontrollers, combining automation and environmental awareness.",
-      industry: "Education"
     },
-    {
-      title: "AI Book Recommender",
-      description: "Grade 9 students implemented a machine learning model using Python and TensorFlow to recommend books based on reading history.",
-      industry: "Education"
-    }
-  ],
-  testimonials: [
-          {
+    caseStudies: [
+      {
+        title: "Smart Trash Can",
+        description: "Students built a motion-activated smart trash can using ultrasonic sensors and microcontrollers, combining automation and environmental awareness.",
+        industry: "Education"
+      },
+      {
+        title: "AI Book Recommender",
+        description: "Grade 9 students implemented a machine learning model using Python and TensorFlow to recommend books based on reading history.",
+        industry: "Education"
+      }
+    ],
+    testimonials: [
+      {
         quote: "The surveillance robot has significantly enhanced our security operations. The mobility aspect provides coverage that would be impossible with fixed cameras alone.",
         author: "Rajesh Singh",
         position: "Security Director, Industrial Manufacturing Ltd."
@@ -269,81 +269,81 @@ export const productsData: Record<string, any> = {
         author: "Maya Krishnan",
         position: "Facilities Manager, Chennai Tech Park"
       }
-  ],
-  faqs: [
-    {
-      question: "Who is this for?",
-      answer: "This program is designed for students from Grade 3 to Grade 9, progressively increasing in complexity with each grade."
-    },
-    {
-      question: "Do students need prior knowledge?",
-      answer: "No, the curriculum begins at the basics and builds up gradually to advanced topics like AI and full-stack development."
-    },
-    {
-      question: "What will students learn?",
-      answer: "They’ll learn coding, electronics, automation, AI/ML, IoT, and web development through real projects."
-    },
-    {
-      question: "Is this hands-on?",
-      answer: "Yes, all modules are project-driven with real hardware kits and development tools."
-    }
-  ]
-},
+    ],
+    faqs: [
+      {
+        question: "Who is this for?",
+        answer: "This program is designed for students from Grade 3 to Grade 9, progressively increasing in complexity with each grade."
+      },
+      {
+        question: "Do students need prior knowledge?",
+        answer: "No, the curriculum begins at the basics and builds up gradually to advanced topics like AI and full-stack development."
+      },
+      {
+        question: "What will students learn?",
+        answer: "They’ll learn coding, electronics, automation, AI/ML, IoT, and web development through real projects."
+      },
+      {
+        question: "Is this hands-on?",
+        answer: "Yes, all modules are project-driven with real hardware kits and development tools."
+      }
+    ]
+  },
 
-"surveillance-robot": {
-  id: "surveillance-robot",
-  title: "Bolt – The Smart Security Dog",
-  description: "AI-powered surveillance companion robot with 360° vision and smart intruder detection. Ideal for homes, schools, and industrial spaces.",
-  fullDescription: `<p>Bolt is an advanced surveillance companion inspired by the agility and loyalty of a dog. Designed for smart security, Bolt combines real-time monitoring, AI-driven insights, and high mobility in a single, compact robotic unit.</p>
+  "surveillance-robot": {
+    id: "surveillance-robot",
+    title: "Bolt – The Smart Security Dog",
+    description: "AI-powered surveillance companion robot with 360° vision and smart intruder detection. Ideal for homes, schools, and industrial spaces.",
+    fullDescription: `<p>Bolt is an advanced surveillance companion inspired by the agility and loyalty of a dog. Designed for smart security, Bolt combines real-time monitoring, AI-driven insights, and high mobility in a single, compact robotic unit.</p>
   <p>Whether patrolling a home, office, or school, Bolt ensures safety and awareness 24/7 with its intuitive controls and intelligent features.</p>`,
-  image: dog,
-  category: "Robotics",
-  tier: "Enterprise",
-  price: "Contact for pricing and partnerships",
-  features: [
-    "360° HD panoramic vision with night surveillance",
-    "All-terrain 4-wheel mobility system",
-    "LIDAR, ultrasonic, and infrared sensor integration",
-    "AI-powered object and intruder detection",
-    "Real-time communication via Wi-Fi, LTE, and Bluetooth",
-    "Voice and app-based control system",
-    "Durable and weather-resistant IP67 body"
-  ],
-  technicalSpecs: {
-    modelName: "Dog (Nickname: Bolt)",
-    type: "Surveillance & Security Companion",
-    mobility: "4-Wheel Drive with All-Terrain Handling",
-    speed: "Up to 12 km/h",
-    cameraSystem: "360° HD Panoramic Vision + Night Vision",
-    sensors: "LIDAR, Ultrasonic, IR, Motion Detection",
-    batteryLife: "Up to 8 hours (Swappable Battery Packs)",
-    aiCapabilities: "Intruder Detection, Object Recognition",
-    communication: "Wi-Fi / LTE / Bluetooth Connectivity",
-    controlOptions: "Mobile App, Remote Desktop, Voice Control",
-    buildMaterial: "Reinforced Carbon Composite Frame",
-    weatherResistance: "IP67 Rated (Dustproof & Waterproof)",
-    dimensions: "50 x 30 x 35 cm",
-    weight: "12.5 kg"
-  },
-  caseStudies: [
-    {
-      title: "School Campus Monitoring",
-      description: "Bolt was deployed at a private school to patrol premises after hours. It detected motion near the science block at midnight, triggering a silent alert to the admin. Footage helped identify and prevent unauthorized access.",
-      industry: "Education"
+    image: dog,
+    category: "Robotics",
+    tier: "Enterprise",
+    price: "Contact for pricing",
+    features: [
+      "360° HD panoramic vision with night surveillance",
+      "All-terrain 4-wheel mobility system",
+      "LIDAR, ultrasonic, and infrared sensor integration",
+      "AI-powered object and intruder detection",
+      "Real-time communication via Wi-Fi, LTE, and Bluetooth",
+      "Voice and app-based control system",
+      "Durable and weather-resistant IP67 body"
+    ],
+    technicalSpecs: {
+      modelName: "Dog (Nickname: Bolt)",
+      type: "Surveillance & Security Companion",
+      mobility: "4-Wheel Drive with All-Terrain Handling",
+      speed: "Up to 12 km/h",
+      cameraSystem: "360° HD Panoramic Vision + Night Vision",
+      sensors: "LIDAR, Ultrasonic, IR, Motion Detection",
+      batteryLife: "Up to 8 hours (Swappable Battery Packs)",
+      aiCapabilities: "Intruder Detection, Object Recognition",
+      communication: "Wi-Fi / LTE / Bluetooth Connectivity",
+      controlOptions: "Mobile App, Remote Desktop, Voice Control",
+      buildMaterial: "Reinforced Carbon Composite Frame",
+      weatherResistance: "IP67 Rated (Dustproof & Waterproof)",
+      dimensions: "50 x 30 x 35 cm",
+      weight: "12.5 kg"
     },
-    {
-      title: "Warehouse Surveillance",
-      description: "A logistics company used Bolt for real-time monitoring of high-value inventory zones. Its AI detected abnormal movement patterns and alerted the security desk, averting a potential theft.",
-      industry: "Logistics"
-    },
-    {
-      title: "Home Automation Companion",
-      description: "Bolt assisted elderly residents by notifying family members when motion was detected near doors, ensuring safety without being intrusive.",
-      industry: "Home Automation"
-    }
-  ],
-  testimonials: [
-          {
+    caseStudies: [
+      {
+        title: "School Campus Monitoring",
+        description: "Bolt was deployed at a private school to patrol premises after hours. It detected motion near the science block at midnight, triggering a silent alert to the admin. Footage helped identify and prevent unauthorized access.",
+        industry: "Education"
+      },
+      {
+        title: "Warehouse Surveillance",
+        description: "A logistics company used Bolt for real-time monitoring of high-value inventory zones. Its AI detected abnormal movement patterns and alerted the security desk, averting a potential theft.",
+        industry: "Logistics"
+      },
+      {
+        title: "Home Automation Companion",
+        description: "Bolt assisted elderly residents by notifying family members when motion was detected near doors, ensuring safety without being intrusive.",
+        industry: "Home Automation"
+      }
+    ],
+    testimonials: [
+      {
         quote: "The surveillance robot has significantly enhanced our security operations. The mobility aspect provides coverage that would be impossible with fixed cameras alone.",
         author: "Rajesh Singh",
         position: "Security Director, Industrial Manufacturing Ltd."
@@ -353,30 +353,30 @@ export const productsData: Record<string, any> = {
         author: "Maya Krishnan",
         position: "Facilities Manager, Chennai Tech Park"
       }
-  ],
-  faqs: [
-    {
-      question: "Is Bolt suitable for outdoor use?",
-      answer: "Yes, Bolt is IP67 rated, meaning it’s resistant to water and dust, making it ideal for outdoor environments."
-    },
-    {
-      question: "Can Bolt be controlled remotely?",
-      answer: "Absolutely. Bolt supports mobile app, remote desktop, and voice control options."
-    },
-    {
-      question: "What happens when the battery runs out?",
-      answer: "Bolt uses swappable battery packs that can be easily replaced for uninterrupted service."
-    },
-    {
-      question: "Can Bolt integrate with existing security systems?",
-      answer: "Yes, it can connect via Wi-Fi or LTE and be integrated with smart home or enterprise security systems."
-    },
-    {
-      question: "Is it suitable for schools and public institutions?",
-      answer: "Definitely. Bolt is already in use in educational and industrial environments as a reliable surveillance companion."
-    }
-  ]
-},
+    ],
+    faqs: [
+      {
+        question: "Is Bolt suitable for outdoor use?",
+        answer: "Yes, Bolt is IP67 rated, meaning it’s resistant to water and dust, making it ideal for outdoor environments."
+      },
+      {
+        question: "Can Bolt be controlled remotely?",
+        answer: "Absolutely. Bolt supports mobile app, remote desktop, and voice control options."
+      },
+      {
+        question: "What happens when the battery runs out?",
+        answer: "Bolt uses swappable battery packs that can be easily replaced for uninterrupted service."
+      },
+      {
+        question: "Can Bolt integrate with existing security systems?",
+        answer: "Yes, it can connect via Wi-Fi or LTE and be integrated with smart home or enterprise security systems."
+      },
+      {
+        question: "Is it suitable for schools and public institutions?",
+        answer: "Definitely. Bolt is already in use in educational and industrial environments as a reliable surveillance companion."
+      }
+    ]
+  },
 
   "code-asthram": {
     id: "code-asthram",
@@ -388,7 +388,7 @@ export const productsData: Record<string, any> = {
     image: code_asthram,
     category: "Educational",
     tier: "Premium",
-    price: "Starting at ₹2,50,000 per year",
+    price: "Contact for pricing",
     features: [
       "Gamified learning experience",
       "Logic-first approach to coding",
@@ -447,60 +447,60 @@ export const productsData: Record<string, any> = {
     ]
   },
 
- "harvester-agricultural-robot": {
-  id: "harvester-agricultural-robot",
-  title: "HEMAN – The Next-Gen Humanoid Robot",
-  description: "Interactive humanoid robot for education, research, and public engagement. Features voice AI, facial recognition, and programmable movement.",
-  fullDescription: `<p>HEMAN is a next-generation humanoid robot developed for education, interaction, and automation. With human-like movement, voice interaction, and AI processing, HEMAN is built to engage users in meaningful ways-be it in classrooms, exhibitions, or R&D environments. It empowers users with real-world robotics and AI experience.</p>`,
-  image: head,
-  category: "Robotics",
-  tier: "Premium",
-  price: "Contact for pricing and customization",
-  features: [
-    "16+ degrees of freedom for realistic human-like motion",
-    "HD vision system with facial recognition",
-    "Voice interaction via stereo microphones and AI speech recognition",
-    "Programmable behavior using Python and block-based coding",
-    "Connectivity via Wi-Fi and Bluetooth",
-    "Interactive touchscreen interface (optional upgrade)",
-    "Durable, child-safe ABS build with soft-edge joints"
-  ],
-  technicalSpecs: {
-    modelName: "HEMAN",
-    type: "Humanoid Robot",
-    height: "135 cm",
-    weight: "35 kg",
-    degreesOfFreedom: "16+",
-    mobility: "Bipedal Walking, Dance, Sitting, Gestures",
-    visionSystem: "HD Camera with Facial Recognition",
-    sensors: "IMU, Touch, Infrared, Force Sensors",
-    audio: "Stereo Microphones and Speakers",
-    aiCapabilities: "Speech Recognition, Object Detection, Behavior Scripting",
-    connectivity: "Wi-Fi / Bluetooth",
-    controlOptions: "Remote App, Voice Commands, Python API",
-    buildMaterial: "ABS Plastic + Reinforced Joints",
-    powerSupply: "Rechargeable Li-Ion Battery (2-3 hours)",
-    useCases: "STEM Education, Human-Robot Interaction Research, Entertainment"
-  },
-  caseStudies: [
-    {
-      title: "STEM Learning in Schools",
-      description: "HEMAN was deployed in a STEM-focused institution where it assisted students in learning coding and robotics by acting out the programs written by students, fostering engagement and innovation.",
-      industry: "Education"
+  "harvester-agricultural-robot": {
+    id: "harvester-agricultural-robot",
+    title: "HEMAN – The Next-Gen Humanoid Robot",
+    description: "Interactive humanoid robot for education, research, and public engagement. Features voice AI, facial recognition, and programmable movement.",
+    fullDescription: `<p>HEMAN is a next-generation humanoid robot developed for education, interaction, and automation. With human-like movement, voice interaction, and AI processing, HEMAN is built to engage users in meaningful ways-be it in classrooms, exhibitions, or R&D environments. It empowers users with real-world robotics and AI experience.</p>`,
+    image: head,
+    category: "Robotics",
+    tier: "Premium",
+    price: "Contact for pricing",
+    features: [
+      "16+ degrees of freedom for realistic human-like motion",
+      "HD vision system with facial recognition",
+      "Voice interaction via stereo microphones and AI speech recognition",
+      "Programmable behavior using Python and block-based coding",
+      "Connectivity via Wi-Fi and Bluetooth",
+      "Interactive touchscreen interface (optional upgrade)",
+      "Durable, child-safe ABS build with soft-edge joints"
+    ],
+    technicalSpecs: {
+      modelName: "HEMAN",
+      type: "Humanoid Robot",
+      height: "135 cm",
+      weight: "35 kg",
+      degreesOfFreedom: "16+",
+      mobility: "Bipedal Walking, Dance, Sitting, Gestures",
+      visionSystem: "HD Camera with Facial Recognition",
+      sensors: "IMU, Touch, Infrared, Force Sensors",
+      audio: "Stereo Microphones and Speakers",
+      aiCapabilities: "Speech Recognition, Object Detection, Behavior Scripting",
+      connectivity: "Wi-Fi / Bluetooth",
+      controlOptions: "Remote App, Voice Commands, Python API",
+      buildMaterial: "ABS Plastic + Reinforced Joints",
+      powerSupply: "Rechargeable Li-Ion Battery (2-3 hours)",
+      useCases: "STEM Education, Human-Robot Interaction Research, Entertainment"
     },
-    {
-      title: "Public Interaction Events",
-      description: "Used in exhibitions, HEMAN engaged with visitors using pre-programmed scripts, gestures, and facial recognition to demonstrate the future of AI-powered human interaction.",
-      industry: "Events & Exhibitions"
-    },
-    {
-      title: "Elder Care Research",
-      description: "A university used HEMAN to explore social interaction with elderly patients, conducting experiments on response times and emotional cues.",
-      industry: "Healthcare Research"
-    }
-  ],
-  testimonials: [
-        {
+    caseStudies: [
+      {
+        title: "STEM Learning in Schools",
+        description: "HEMAN was deployed in a STEM-focused institution where it assisted students in learning coding and robotics by acting out the programs written by students, fostering engagement and innovation.",
+        industry: "Education"
+      },
+      {
+        title: "Public Interaction Events",
+        description: "Used in exhibitions, HEMAN engaged with visitors using pre-programmed scripts, gestures, and facial recognition to demonstrate the future of AI-powered human interaction.",
+        industry: "Events & Exhibitions"
+      },
+      {
+        title: "Elder Care Research",
+        description: "A university used HEMAN to explore social interaction with elderly patients, conducting experiments on response times and emotional cues.",
+        industry: "Healthcare Research"
+      }
+    ],
+    testimonials: [
+      {
         quote: "The surveillance robot has significantly enhanced our security operations. The mobility aspect provides coverage that would be impossible with fixed cameras alone.",
         author: "Rajesh Singh",
         position: "Security Director, Industrial Manufacturing Ltd."
@@ -510,34 +510,34 @@ export const productsData: Record<string, any> = {
         author: "Maya Krishnan",
         position: "Facilities Manager, Chennai Tech Park"
       }
-  ],
-  faqs: [
-    {
-      question: "Can HEMAN be programmed by beginners?",
-      answer: "Yes, HEMAN supports both block-based and Python programming, making it ideal for all skill levels."
-    },
-    {
-      question: "Is HEMAN safe for children?",
-      answer: "Absolutely. It’s built with ABS plastic and rounded joints for safety in educational environments."
-    },
-    {
-      question: "Does HEMAN support AI features?",
-      answer: "Yes. It supports facial recognition, speech detection, and programmable behavior logic."
-    },
-    {
-      question: "How is HEMAN powered?",
-      answer: "It runs on a rechargeable Li-Ion battery that lasts 2–3 hours depending on usage."
-    },
-    {
-      question: "Can HEMAN be used in live demonstrations?",
-      answer: "Yes, it's designed for interaction-heavy environments like expos and stage demos."
-    }
-  ]
-},
+    ],
+    faqs: [
+      {
+        question: "Can HEMAN be programmed by beginners?",
+        answer: "Yes, HEMAN supports both block-based and Python programming, making it ideal for all skill levels."
+      },
+      {
+        question: "Is HEMAN safe for children?",
+        answer: "Absolutely. It’s built with ABS plastic and rounded joints for safety in educational environments."
+      },
+      {
+        question: "Does HEMAN support AI features?",
+        answer: "Yes. It supports facial recognition, speech detection, and programmable behavior logic."
+      },
+      {
+        question: "How is HEMAN powered?",
+        answer: "It runs on a rechargeable Li-Ion battery that lasts 2–3 hours depending on usage."
+      },
+      {
+        question: "Can HEMAN be used in live demonstrations?",
+        answer: "Yes, it's designed for interaction-heavy environments like expos and stage demos."
+      }
+    ]
+  },
 
 
 
-// extra contant
+  // extra contant
 
   "edubot-teaching-assistant": {
     id: "edubot-teaching-assistant",
@@ -549,7 +549,7 @@ export const productsData: Record<string, any> = {
     image: "https://images.unsplash.com/photo-1535378620166-273708d44e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80",
     category: "Educational",
     tier: "Standard",
-    price: "Starting at ₹2,95,000",
+    price: "Contact for pricing",
     features: [
       "Interactive lesson delivery",
       "Personalized learning support",
@@ -617,7 +617,7 @@ export const productsData: Record<string, any> = {
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80",
     category: "Software",
     tier: "Enterprise",
-    price: "Starting at ₹6,50,000 per year",
+    price: "Contact for pricing",
     features: [
       "Visual workflow designer",
       "Ready-to-use activity templates",

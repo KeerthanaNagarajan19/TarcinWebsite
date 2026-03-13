@@ -29,10 +29,9 @@ export default defineConfig({
       clientPort: HMR_PORT,    // what the browser tries to connect to
     },
     proxy: {
-      "/uploads": { 
+      "/uploads": {
         target: "http://localhost:5000",
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/api/, ""), // Remove /api for uploads
       },
       "/api": {
         target: "http://localhost:5000",
@@ -45,12 +44,49 @@ export default defineConfig({
       },
     },
   },
-    historyApiFallback: true,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
       "@assets": path.resolve(__dirname, "src/assets"),
     },
   },
-  // build: { outDir: "dist" },
+  build: {
+    outDir: "dist",
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React runtime
+          "vendor-react": ["react", "react-dom"],
+          // Routing
+          "vendor-router": ["wouter"],
+          // Animation
+          "vendor-motion": ["framer-motion"],
+          // Icons
+          "vendor-icons": ["lucide-react"],
+          // Radix UI / Shadcn
+          "vendor-radix": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-label",
+            "@radix-ui/react-select",
+            "@radix-ui/react-slot",
+            "@radix-ui/react-tabs",
+            "@radix-ui/react-toast",
+            "@radix-ui/react-tooltip",
+          ],
+          // Data fetching
+          "vendor-query": ["@tanstack/react-query", "axios"],
+          // Date utilities
+          "vendor-date": ["date-fns"],
+          // PDF
+          "vendor-pdf": ["jspdf"],
+          // Charts
+          "vendor-charts": ["recharts"],
+          // DOMPurify
+          "vendor-purify": ["dompurify"],
+        },
+      },
+    },
+  },
 });

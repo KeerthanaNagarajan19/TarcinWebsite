@@ -39,9 +39,17 @@ router.post("/login", async (req: Request, res: Response) => {
   });
 });
 
-// ✅ Return user info
-router.get("/me", authenticate, (req: Request, res: Response) => {
-  res.json((req as any).user);
+// ✅ Return full user info (including profilePicture) from DB
+router.get("/me", authenticate, async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).user.id;
+    const user = await User.findById(userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // ✅ Update profile
